@@ -61,11 +61,22 @@
     <Compile Include="Entities\Stock.cs" />
     <Compile Include="Entities\Tag.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="MediaContext.cs" />
+    <Compile Include="Migrations\201711291411178_Initial.cs" />
+    <Compile Include="Migrations\201711291411178_Initial.Designer.cs">
+      <DependentUpon>201711291411178_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711291411178_Initial.resx">
+      <DependentUpon>201711291411178_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

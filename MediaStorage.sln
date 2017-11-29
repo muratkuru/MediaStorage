@@ -3,7 +3,43 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaStorage.Web", "MediaStorage.Web\MediaStorage.Web.csproj", "{0158A985-F4AA-43EB-AE5C-AFD53E9CE43E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaStorage.Entity", "MediaStorage.Entity\MediaStorage.Entity.csproj", "{37178D47-B377-403C-9864-BD9C61400BF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaStorage.Data", "MediaStorage.Data\MediaStorage.Data.csproj", "{76D794C6-8148-4143-9846-AFB200275DDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaStorage.Service", "MediaStorage.Service\MediaStorage.Service.csproj", "{B186D6F0-5FA2-4D6C-858D-4F4255770C7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaStorage.Common", "MediaStorage.Common\MediaStorage.Common.csproj", "{60FAFE1B-6BEC-4F0B-A9C5-393A3ED025EF}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0158A985-F4AA-43EB-AE5C-AFD53E9CE43E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0158A985-F4AA-43EB-AE5C-AFD53E9CE43E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0158A985-F4AA-43EB-AE5C-AFD53E9CE43E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0158A985-F4AA-43EB-AE5C-AFD53E9CE43E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37178D47-B377-403C-9864-BD9C61400BF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37178D47-B377-403C-9864-BD9C61400BF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37178D47-B377-403C-9864-BD9C61400BF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37178D47-B377-403C-9864-BD9C61400BF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76D794C6-8148-4143-9846-AFB200275DDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76D794C6-8148-4143-9846-AFB200275DDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76D794C6-8148-4143-9846-AFB200275DDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76D794C6-8148-4143-9846-AFB200275DDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B186D6F0-5FA2-4D6C-858D-4F4255770C7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B186D6F0-5FA2-4D6C-858D-4F4255770C7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B186D6F0-5FA2-4D6C-858D-4F4255770C7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B186D6F0-5FA2-4D6C-858D-4F4255770C7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60FAFE1B-6BEC-4F0B-A9C5-393A3ED025EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60FAFE1B-6BEC-4F0B-A9C5-393A3ED025EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60FAFE1B-6BEC-4F0B-A9C5-393A3ED025EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60FAFE1B-6BEC-4F0B-A9C5-393A3ED025EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

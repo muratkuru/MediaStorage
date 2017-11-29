@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
 
-namespace MediaStorage.Entity.Models
+namespace MediaStorage.Data.Entities
 {
     public class MaterialType : BaseEntity
     {

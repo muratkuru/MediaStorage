@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MediaStorage.Entity
+namespace MediaStorage.Data
 {
     public class BaseEntity
     {

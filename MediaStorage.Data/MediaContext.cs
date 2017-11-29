@@ -6,6 +6,13 @@ namespace MediaStorage.Data
 {
     public class MediaContext : DbContext
     {
+        public MediaContext()
+            :base("name=MediaContext")
+        {
+            Configuration.LazyLoadingEnabled = false;
+            Database.SetInitializer<MediaContext>(null);
+        }
+
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Department> Departments { get; set; }

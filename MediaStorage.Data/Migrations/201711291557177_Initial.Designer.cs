@@ -13,7 +13,7 @@ namespace MediaStorage.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201711291411178_Initial"; }
+            get { return "201711291557177_Initial"; }
         }
         
         string IMigrationMetadata.Source

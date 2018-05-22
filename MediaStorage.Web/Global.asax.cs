@@ -22,17 +22,17 @@ namespace MediaStorage.Web
 
         private AutofacDependencyResolver GetDependencyResolver()
         {
-            var context = new MediaContext();
             var builder = new ContainerBuilder();
+
+            builder.RegisterType<MediaContext>().AsSelf().InstancePerRequest();
 
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
 
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>()
-                .WithParameter("context", context);
-            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>))
-                .WithParameter("context", context);
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>));
 
             builder.RegisterType<PageService>().As<IPageService>();
+            builder.RegisterType<MaterialTypeService>().As<IMaterialTypeService>();
 
             IContainer container = builder.Build();
 

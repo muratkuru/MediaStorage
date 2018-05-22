@@ -4,10 +4,15 @@ namespace MediaStorage.Data
 {
     public class BaseEntity
     {
-        public DateTime AddedDate { get; set; } = DateTime.Now;
+        public DateTime CreateDate { get; set; } = DateTime.Now;
 
         public DateTime? UpdatedDate { get; set; }
 
-        public bool IsDeleted { get; set; } = false;
+        public bool IsRemoved { get; set; } = false;
+    }
+
+    public class BaseEntity<T> : BaseEntity
+    {
+        public T Id { get; set; }
     }
 }

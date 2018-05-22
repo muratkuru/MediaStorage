@@ -138,6 +138,8 @@
     <Content Include="Areas\Panel\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Panel\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Panel\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Panel\Views\MaterialType\Index.cshtml" />
+    <Content Include="Areas\Panel\Views\MaterialType\Create.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -161,6 +163,7 @@
     <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
     <Compile Include="Areas\Panel\Controllers\BaseController.cs" />
     <Compile Include="Areas\Panel\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Panel\Controllers\MaterialTypeController.cs" />
     <Compile Include="Areas\Panel\PanelAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -195,6 +198,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MediaStorage.Common\MediaStorage.Common.csproj">
+      <Project>{60fafe1b-6bec-4f0b-a9c5-393a3ed025ef}</Project>
+      <Name>MediaStorage.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MediaStorage.Data\MediaStorage.Data.csproj">
       <Project>{76d794c6-8148-4143-9846-afb200275ddf}</Project>
       <Name>MediaStorage.Data</Name>

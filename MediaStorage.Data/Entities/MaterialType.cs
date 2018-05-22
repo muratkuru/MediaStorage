@@ -1,22 +1,19 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
 
 namespace MediaStorage.Data.Entities
 {
-    public class MaterialType : BaseEntity
+    public class MaterialType : BaseEntity<int>
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
 
         public virtual ICollection<Material> Materials { get; set; }
 
-        public virtual ICollection<MaterialProperty> MaterialProperties { get; set; }
+        public virtual ICollection<MaterialTypeProperty> MaterialTypeProperties { get; set; }
     }
 
-    class MaterialTypeMap : EntityTypeConfiguration<MaterialType>
+    class MaterialTypeMap : BaseConfiguration<MaterialType>
     {
         internal MaterialTypeMap()
         {

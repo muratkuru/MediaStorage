@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
 
 namespace MediaStorage.Data.Entities
 {
-    public class Library : BaseEntity
+    public class Library : BaseEntity<int>
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public ICollection<Department> Departments { get; set; }
@@ -14,7 +11,7 @@ namespace MediaStorage.Data.Entities
         public ICollection<Stock> Stocks { get; set; }
     }
 
-    class LibraryMap : EntityTypeConfiguration<Library>
+    class LibraryMap : BaseConfiguration<Library>
     {
         internal LibraryMap()
         {

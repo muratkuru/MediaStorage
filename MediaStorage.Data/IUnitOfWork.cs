@@ -3,16 +3,12 @@ using System.Threading.Tasks;
 
 namespace MediaStorage.Data
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
-        IRepository<T> GetRepository<T>() where T : BaseEntity;
-
         int Commit();
 
         int SaveChanges();
 
         Task<int> SaveChangesAsync();
-
-        //TODO: implement idisposable
     }
 }

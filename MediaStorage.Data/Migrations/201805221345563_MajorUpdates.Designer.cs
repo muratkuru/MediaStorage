@@ -7,13 +7,13 @@ namespace MediaStorage.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Initial : IMigrationMetadata
+    public sealed partial class MajorUpdates : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(MajorUpdates));
         
         string IMigrationMetadata.Id
         {
-            get { return "201711291557177_Initial"; }
+            get { return "201805221345563_MajorUpdates"; }
         }
         
         string IMigrationMetadata.Source

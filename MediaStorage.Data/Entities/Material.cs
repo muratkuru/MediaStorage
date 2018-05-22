@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
 
 namespace MediaStorage.Data.Entities
 {
-    public class Material : BaseEntity
+    public class Material : BaseEntity<int>
     {
-        public string Id { get; set; }
+        public string InternationalNumber { get; set; }
 
         public string Title { get; set; }
 
@@ -28,11 +27,15 @@ namespace MediaStorage.Data.Entities
         public virtual ICollection<MaterialPropertyItem> MaterialPropertyItems { get; set; }
     }
 
-    class MaterialMap : EntityTypeConfiguration<Material>
+    class MaterialMap : BaseConfiguration<Material>
     {
         internal MaterialMap()
         {
             HasKey(m => m.Id);
+            HasIndex(m => m.InternationalNumber).IsUnique();
+            Property(m => m.InternationalNumber)
+                .HasMaxLength(30)
+                .IsRequired();
             Property(m => m.Title).IsRequired();
             HasMany(m => m.Stocks)
                 .WithRequired()

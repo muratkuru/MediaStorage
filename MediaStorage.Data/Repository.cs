@@ -53,9 +53,11 @@ namespace MediaStorage.Data
             dbSet.Remove(entity);
         }
 
+        // TODO: Add to find result zero control. 
         public void Delete(object id)
         {
-            dbSet.Remove(
+            dbSet.Remove
+            (
                 Find(id)
             );
         }

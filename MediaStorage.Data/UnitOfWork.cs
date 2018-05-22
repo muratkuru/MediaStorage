@@ -35,11 +35,6 @@ namespace MediaStorage.Data
             return commitCount;
         }
 
-        public IRepository<T> GetRepository<T>() where T : BaseEntity
-        {
-            return new Repository<T>(context);
-        }
-
         public int SaveChanges()
         {
             return context.SaveChanges();
@@ -50,26 +45,26 @@ namespace MediaStorage.Data
             return context.SaveChangesAsync();
         }
 
-        //private bool disposed = false;
-        //protected virtual void Dispose(bool disposing)
-        //{
-        //    if (this.disposed == false)
-        //    {
-        //        if (disposing)
-        //        {
-        //            if (context != null)
-        //            {
-        //                context.Dispose();
-        //            }
-        //        }
-        //    }
-        //    disposed = true;
-        //}
+        #region IDisposable implementation
+        /*
+         * DbContext has been disposed error on IDisposable pattern.
+         */
+        private bool disposed = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed == false)
+                if (disposing)
+                    if (context != null)
+                        context.Dispose();
 
-        //public void Dispose()
-        //{
-        //    Dispose(true);
-        //    GC.SuppressFinalize(this);
-        //}
+            disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

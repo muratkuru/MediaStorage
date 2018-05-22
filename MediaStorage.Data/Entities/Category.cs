@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
 
 namespace MediaStorage.Data.Entities
 {
-    public class Category : BaseEntity
+    public class Category : BaseEntity<int>
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public int? ParentCategoryId { get; set; }
@@ -20,7 +17,7 @@ namespace MediaStorage.Data.Entities
         public virtual ICollection<Material> Materials { get; set; }
     }
 
-    class CategoryMap : EntityTypeConfiguration<Category>
+    class CategoryMap : BaseConfiguration<Category>
     {
         internal CategoryMap()
         {

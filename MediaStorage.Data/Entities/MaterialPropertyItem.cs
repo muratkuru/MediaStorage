@@ -1,21 +1,17 @@
-﻿using System.Data.Entity.ModelConfiguration;
-
-namespace MediaStorage.Data.Entities
+﻿namespace MediaStorage.Data.Entities
 {
-    public class MaterialPropertyItem : BaseEntity
+    public class MaterialPropertyItem : BaseEntity<int>
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
-        public string MaterialId { get; set; }
+        public int MaterialId { get; set; }
         public Material Material { get; set; }
 
-        public int MaterialPropertyId { get; set; }
-        public MaterialProperty MaterialProperty { get; set; }
+        public int MaterialTypePropertyId { get; set; }
+        public MaterialTypeProperty MaterialTypeProperty { get; set; }
     }
 
-    class MaterialPropertyItemMap : EntityTypeConfiguration<MaterialPropertyItem>
+    class MaterialPropertyItemMap : BaseConfiguration<MaterialPropertyItem>
     {
         internal MaterialPropertyItemMap()
         {

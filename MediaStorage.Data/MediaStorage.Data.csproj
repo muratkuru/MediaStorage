@@ -47,13 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseConfiguration.cs" />
     <Compile Include="BaseEntity.cs" />
-    <Compile Include="Entities\Borrowing.cs" />
+    <Compile Include="Entities\Administrator.cs" />
+    <Compile Include="Entities\Lending.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Department.cs" />
     <Compile Include="Entities\Library.cs" />
     <Compile Include="Entities\Material.cs" />
-    <Compile Include="Entities\MaterialProperty.cs" />
+    <Compile Include="Entities\MaterialTypeProperty.cs" />
     <Compile Include="Entities\MaterialPropertyItem.cs" />
     <Compile Include="Entities\MaterialType.cs" />
     <Compile Include="Entities\Page.cs" />
@@ -64,9 +66,9 @@
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="MediaContext.cs" />
-    <Compile Include="Migrations\201711291557177_Initial.cs" />
-    <Compile Include="Migrations\201711291557177_Initial.Designer.cs">
-      <DependentUpon>201711291557177_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201805221345563_MajorUpdates.cs" />
+    <Compile Include="Migrations\201805221345563_MajorUpdates.Designer.cs">
+      <DependentUpon>201805221345563_MajorUpdates.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,11 +79,13 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711291557177_Initial.resx">
-      <DependentUpon>201711291557177_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805221345563_MajorUpdates.resx">
+      <DependentUpon>201805221345563_MajorUpdates.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

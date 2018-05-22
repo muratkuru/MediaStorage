@@ -16,10 +16,10 @@ namespace MediaStorage.Service
         private IUnitOfWork uow;
         private IRepository<Page> pageRepository;
 
-        public PageService(IUnitOfWork uow)
+        public PageService(IUnitOfWork uow, IRepository<Page> pageRepository)
         {
             this.uow = uow;
-            pageRepository = uow.GetRepository<Page>();
+            this.pageRepository = pageRepository;
         }
 
         public ICollection<Page> GetAllPages()

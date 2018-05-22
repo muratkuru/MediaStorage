@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MediaStorage.Data.Entities
 {
-    public class User : BaseEntity
+    public class User : BaseEntity<Guid>
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-
         public string FullName { get; set; }
 
         public string Mail { get; set; }
@@ -16,22 +14,40 @@ namespace MediaStorage.Data.Entities
 
         public string PhoneNumber { get; set; }
 
+        public string Password { get; set; }
+
+        public bool IsActive { get; set; }
+
         public virtual ICollection<Reservation> Reservations { get; set; }
 
-        public virtual ICollection<Borrowing> Borrowings { get; set; }
+        public virtual ICollection<Lending> Lendings { get; set; }
     }
 
-    class UserMap : EntityTypeConfiguration<User>
+    class UserMap : BaseConfiguration<User>
     {
         internal UserMap()
         {
             HasKey(m => m.Id);
-            Property(m => m.FullName).IsRequired();
-            Property(m => m.Mail).IsRequired();
+            HasIndex(m => m.Mail).IsUnique();
+            HasIndex(m => m.PhoneNumber).IsUnique();
+            Property(m => m.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(m => m.FullName)
+                .IsRequired()
+                .HasMaxLength(100);
+            Property(m => m.Mail)
+                .IsRequired()
+                .HasMaxLength(200);
+            Property(m => m.PhoneNumber)
+                .IsRequired()
+                .HasMaxLength(30);
+            Property(m => m.Password).IsRequired();
+            Property(m => m.IsActive)
+                .HasColumnAnnotation("DefaultValueSql", 0);
             HasMany(m => m.Reservations)
                 .WithRequired()
                 .HasForeignKey(m => m.UserId);
-            HasMany(m => m.Borrowings)
+            HasMany(m => m.Lendings)
                 .WithRequired()
                 .HasForeignKey(m => m.UserId);
         }

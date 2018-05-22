@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
 
 namespace MediaStorage.Data.Entities
 {
-    public class Page : BaseEntity
+    public class Page : BaseEntity<int>
     {
-        public int Id { get; set; }
-
         public string Title { get; set; }
 
         public string Area { get; set; }
@@ -25,7 +22,7 @@ namespace MediaStorage.Data.Entities
         public virtual ICollection<Page> SubPages { get; set; }
     }
 
-    class PageMap : EntityTypeConfiguration<Page>
+    class PageMap : BaseConfiguration<Page>
     {
         internal PageMap()
         {

@@ -1,17 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity.ModelConfiguration;
 
 namespace MediaStorage.Data.Entities
 {
-    public class Stock : BaseEntity
+    public class Stock : BaseEntity<int>
     {
-        public int Id { get; set; }
-
-        public string FixtureNumber { get; set; }
+        public string Barcode { get; set; }
 
         public string Location { get; set; }
 
-        public string MaterialId { get; set; }
+        public int MaterialId { get; set; }
         public virtual Material Material { get; set; }
 
         public int LibraryId { get; set; }
@@ -22,19 +19,20 @@ namespace MediaStorage.Data.Entities
 
         public virtual ICollection<Reservation> Reservations { get; set; }
 
-        public virtual ICollection<Borrowing> Borrowings { get; set; }
+        public virtual ICollection<Lending> Lendings { get; set; }
     }
 
-    class StockMap : EntityTypeConfiguration<Stock>
+    class StockMap : BaseConfiguration<Stock>
     {
         internal StockMap()
         {
             HasKey(m => m.Id);
-            Property(m => m.FixtureNumber).IsRequired();
+            Property(m => m.Barcode)
+                .IsRequired();
             HasMany(m => m.Reservations)
                 .WithRequired()
                 .HasForeignKey(m => m.StockId);
-            HasMany(m => m.Borrowings)
+            HasMany(m => m.Lendings)
                 .WithRequired()
                 .HasForeignKey(m => m.StockId);
         }

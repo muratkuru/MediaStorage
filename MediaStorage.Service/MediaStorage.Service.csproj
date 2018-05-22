@@ -47,10 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MaterialTypeService.cs" />
     <Compile Include="PageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MediaStorage.Common\MediaStorage.Common.csproj">
+      <Project>{60fafe1b-6bec-4f0b-a9c5-393a3ed025ef}</Project>
+      <Name>MediaStorage.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MediaStorage.Data\MediaStorage.Data.csproj">
       <Project>{76D794C6-8148-4143-9846-AFB200275DDF}</Project>
       <Name>MediaStorage.Data</Name>

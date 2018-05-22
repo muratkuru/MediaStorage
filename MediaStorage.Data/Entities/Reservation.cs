@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Data.Entity.ModelConfiguration;
 
 namespace MediaStorage.Data.Entities
 {
-    public class Reservation : BaseEntity
+    public class Reservation : BaseEntity<int>
     {
-        public int Id { get; set; }
-
-        public DateTime ApplicationDate { get; set; }
+        public DateTime ReservationDate { get; set; }
 
         public int StockId { get; set; }
         public virtual Stock Stock { get; set; }
@@ -16,7 +13,7 @@ namespace MediaStorage.Data.Entities
         public virtual User User { get; set; }
     }
 
-    class ReservationMap : EntityTypeConfiguration<Reservation>
+    class ReservationMap : BaseConfiguration<Reservation>
     {
         internal ReservationMap()
         {

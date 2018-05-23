@@ -12,12 +12,14 @@ namespace MediaStorage.Data.Entities
         public ICollection<Stock> Stocks { get; set; }
     }
 
-    class DepartmentMap : BaseConfiguration<Department>
+    class DepartmentConfiguration : BaseConfiguration<Department>
     {
-        internal DepartmentMap()
+        internal DepartmentConfiguration()
         {
             HasKey(m => m.Id);
-            Property(m => m.Name).IsRequired();
+            Property(m => m.Name)
+                .IsRequired()
+                .HasMaxLength(200);
             HasMany(m => m.Stocks)
                 .WithRequired()
                 .HasForeignKey(m => m.DepartmentId);

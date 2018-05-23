@@ -22,9 +22,9 @@ namespace MediaStorage.Data.Entities
         public virtual ICollection<Lending> Lendings { get; set; }
     }
 
-    class StockMap : BaseConfiguration<Stock>
+    class StockConfiguration : BaseConfiguration<Stock>
     {
-        internal StockMap()
+        internal StockConfiguration()
         {
             HasKey(m => m.Id);
             Property(m => m.Barcode)

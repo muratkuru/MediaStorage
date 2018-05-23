@@ -17,12 +17,14 @@ namespace MediaStorage.Data.Entities
         public virtual ICollection<Material> Materials { get; set; }
     }
 
-    class CategoryMap : BaseConfiguration<Category>
+    class CategoryConfiguration : BaseConfiguration<Category>
     {
-        internal CategoryMap()
+        internal CategoryConfiguration()
         {
             HasKey(m => m.Id);
-            Property(m => m.Name).IsRequired();
+            Property(m => m.Name)
+                .IsRequired()
+                .HasMaxLength(200);
             Property(m => m.MaterialTypeId).IsRequired();
             HasMany(m => m.Materials)
                 .WithMany(m => m.Categories)

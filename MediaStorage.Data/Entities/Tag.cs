@@ -9,12 +9,14 @@ namespace MediaStorage.Data.Entities
         public ICollection<Material> Materials { get; set; }
     }
 
-    class TagMap : BaseConfiguration<Tag>
+    class TagConfiguration : BaseConfiguration<Tag>
     {
-        internal TagMap()
+        internal TagConfiguration()
         {
             HasKey(m => m.Id);
-            Property(m => m.Name).IsRequired();
+            Property(m => m.Name)
+                .IsRequired()
+                .HasMaxLength(200);
             HasMany(m => m.Materials)
                 .WithMany(m => m.Tags)
                 .Map(m =>

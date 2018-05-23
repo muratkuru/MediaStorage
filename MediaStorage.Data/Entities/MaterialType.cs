@@ -13,12 +13,14 @@ namespace MediaStorage.Data.Entities
         public virtual ICollection<MaterialTypeProperty> MaterialTypeProperties { get; set; }
     }
 
-    class MaterialTypeMap : BaseConfiguration<MaterialType>
+    class MaterialTypeConfiguration : BaseConfiguration<MaterialType>
     {
-        internal MaterialTypeMap()
+        internal MaterialTypeConfiguration()
         {
             HasKey(m => m.Id);
-            Property(m => m.Name).IsRequired();
+            Property(m => m.Name)
+                .IsRequired()
+                .HasMaxLength(200);
             HasMany(m => m.Categories)
                 .WithRequired()
                 .HasForeignKey(m => m.MaterialTypeId);

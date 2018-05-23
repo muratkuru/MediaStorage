@@ -23,9 +23,9 @@ namespace MediaStorage.Data.Entities
         public virtual ICollection<Lending> Lendings { get; set; }
     }
 
-    class UserMap : BaseConfiguration<User>
+    class UserConfiguration : BaseConfiguration<User>
     {
-        internal UserMap()
+        internal UserConfiguration()
         {
             HasKey(m => m.Id);
             HasIndex(m => m.Mail).IsUnique();
@@ -34,14 +34,16 @@ namespace MediaStorage.Data.Entities
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(m => m.FullName)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(200);
             Property(m => m.Mail)
                 .IsRequired()
                 .HasMaxLength(200);
             Property(m => m.PhoneNumber)
                 .IsRequired()
                 .HasMaxLength(30);
-            Property(m => m.Password).IsRequired();
+            Property(m => m.Password)
+                .IsRequired()
+                .HasMaxLength(512);
             Property(m => m.IsActive)
                 .HasColumnAnnotation("DefaultValueSql", 0);
             HasMany(m => m.Reservations)

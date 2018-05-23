@@ -27,16 +27,18 @@ namespace MediaStorage.Data.Entities
         public virtual ICollection<MaterialPropertyItem> MaterialPropertyItems { get; set; }
     }
 
-    class MaterialMap : BaseConfiguration<Material>
+    class MaterialConfiguration : BaseConfiguration<Material>
     {
-        internal MaterialMap()
+        internal MaterialConfiguration()
         {
             HasKey(m => m.Id);
             HasIndex(m => m.InternationalNumber).IsUnique();
             Property(m => m.InternationalNumber)
                 .HasMaxLength(30)
                 .IsRequired();
-            Property(m => m.Title).IsRequired();
+            Property(m => m.Title)
+                .IsRequired()
+                .HasMaxLength(512);
             HasMany(m => m.Stocks)
                 .WithRequired()
                 .HasForeignKey(m => m.MaterialId);

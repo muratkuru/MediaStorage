@@ -11,14 +11,21 @@ namespace MediaStorage.Data.Entities
         public string Password { get; set; }
     }
 
-    class AdministratorMap : BaseConfiguration<Administrator>
+    class AdministratorConfiguration : BaseConfiguration<Administrator>
     {
-        internal AdministratorMap()
+        internal AdministratorConfiguration()
         {
             HasKey(m => m.Id);
-            Property(m => m.Username).IsRequired();
-            Property(m => m.Mail).IsRequired();
-            Property(m => m.Password).IsRequired();
+            HasIndex(m => m.Username).IsUnique();
+            Property(m => m.Username)
+                .IsRequired()
+                .HasMaxLength(30);
+            Property(m => m.Mail)
+                .IsRequired()
+                .HasMaxLength(200);
+            Property(m => m.Password)
+                .IsRequired()
+                .HasMaxLength(512);
         }
     }
 }

@@ -15,9 +15,9 @@ namespace MediaStorage.Data.Entities
         public virtual User User { get; set; }
     }
 
-    class LendingMap : BaseConfiguration<Lending>
+    class LendingConfiguration : BaseConfiguration<Lending>
     {
-        internal LendingMap()
+        internal LendingConfiguration()
         {
             HasKey(m => m.Id);
             Property(m => m.LendingDate).IsRequired();

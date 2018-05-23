@@ -11,12 +11,13 @@
         public MaterialTypeProperty MaterialTypeProperty { get; set; }
     }
 
-    class MaterialPropertyItemMap : BaseConfiguration<MaterialPropertyItem>
+    class MaterialPropertyItemConfiguration : BaseConfiguration<MaterialPropertyItem>
     {
-        internal MaterialPropertyItemMap()
+        internal MaterialPropertyItemConfiguration()
         {
             HasKey(m => m.Id);
-            Property(m => m.Name).IsRequired();
+            Property(m => m.Name)
+                .IsRequired();
         }
     }
 }

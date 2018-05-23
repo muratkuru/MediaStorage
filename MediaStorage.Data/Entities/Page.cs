@@ -22,9 +22,9 @@ namespace MediaStorage.Data.Entities
         public virtual ICollection<Page> SubPages { get; set; }
     }
 
-    class PageMap : BaseConfiguration<Page>
+    class PageConfiguration : BaseConfiguration<Page>
     {
-        internal PageMap()
+        internal PageConfiguration()
         {
             HasKey(m => m.Id);
             Property(m => m.Title).IsRequired();

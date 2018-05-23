@@ -47,20 +47,20 @@ namespace MediaStorage.Data
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
-            modelBuilder.Configurations.Add(new CategoryMap());
-            modelBuilder.Configurations.Add(new DepartmentMap());
-            modelBuilder.Configurations.Add(new LibraryMap());
-            modelBuilder.Configurations.Add(new MaterialMap());
-            modelBuilder.Configurations.Add(new MaterialTypeMap());
-            modelBuilder.Configurations.Add(new MaterialTypePropertyMap());
-            modelBuilder.Configurations.Add(new MaterialPropertyItemMap());
-            modelBuilder.Configurations.Add(new ReservationMap());
-            modelBuilder.Configurations.Add(new LendingMap());
-            modelBuilder.Configurations.Add(new StockMap());
-            modelBuilder.Configurations.Add(new TagMap());
-            modelBuilder.Configurations.Add(new UserMap());
-            modelBuilder.Configurations.Add(new PageMap());
-            modelBuilder.Configurations.Add(new AdministratorMap());
+            modelBuilder.Configurations.Add(new CategoryConfiguration());
+            modelBuilder.Configurations.Add(new DepartmentConfiguration());
+            modelBuilder.Configurations.Add(new LibraryConfiguration());
+            modelBuilder.Configurations.Add(new MaterialConfiguration());
+            modelBuilder.Configurations.Add(new MaterialTypeConfiguration());
+            modelBuilder.Configurations.Add(new MaterialTypePropertyConfiguration());
+            modelBuilder.Configurations.Add(new MaterialPropertyItemConfiguration());
+            modelBuilder.Configurations.Add(new ReservationConfiguration());
+            modelBuilder.Configurations.Add(new LendingConfiguration());
+            modelBuilder.Configurations.Add(new StockConfiguration());
+            modelBuilder.Configurations.Add(new TagConfiguration());
+            modelBuilder.Configurations.Add(new UserConfiguration());
+            modelBuilder.Configurations.Add(new PageConfiguration());
+            modelBuilder.Configurations.Add(new AdministratorConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

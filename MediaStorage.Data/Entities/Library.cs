@@ -11,12 +11,14 @@ namespace MediaStorage.Data.Entities
         public ICollection<Stock> Stocks { get; set; }
     }
 
-    class LibraryMap : BaseConfiguration<Library>
+    class LibraryConfiguration : BaseConfiguration<Library>
     {
-        internal LibraryMap()
+        internal LibraryConfiguration()
         {
             HasKey(m => m.Id);
-            Property(m => m.Name).IsRequired();
+            Property(m => m.Name)
+                .IsRequired()
+                .HasMaxLength(200);
             HasMany(m => m.Departments)
                 .WithRequired()
                 .HasForeignKey(m => m.LibraryId);

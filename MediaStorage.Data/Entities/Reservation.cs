@@ -13,9 +13,9 @@ namespace MediaStorage.Data.Entities
         public virtual User User { get; set; }
     }
 
-    class ReservationMap : BaseConfiguration<Reservation>
+    class ReservationConfiguration : BaseConfiguration<Reservation>
     {
-        internal ReservationMap()
+        internal ReservationConfiguration()
         {
             HasKey(m => m.Id);
         }

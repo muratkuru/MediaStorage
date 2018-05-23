@@ -10,7 +10,11 @@ namespace MediaStorage.Data
     {
         IQueryable<T> GetAll();
 
+        IQueryable<T> GetAll(params Expression<Func<T, object>>[] includes);
+
         IQueryable<T> GetAll(Expression<Func<T, bool>> predicate);
+
+        IQueryable<T> GetAll(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
 
         T Get(Expression<Func<T, bool>> predicate);
 

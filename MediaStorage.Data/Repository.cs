@@ -94,9 +94,27 @@ namespace MediaStorage.Data
             return dbSet;
         }
 
+        public IQueryable<T> GetAll(params Expression<Func<T, object>>[] includes)
+        {
+            var query = dbSet.AsQueryable();
+
+            if(includes != null)
+            {
+                foreach (var item in includes)
+                    query = query.Include(item);
+            }
+
+            return query;
+        }
+
         public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate)
         {
             return dbSet.Where(predicate);
+        }
+
+        public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+        {
+            return GetAll(includes).Where(predicate);
         }
 
         public Task<T> GetAsync(Expression<Func<T, bool>> predicate)

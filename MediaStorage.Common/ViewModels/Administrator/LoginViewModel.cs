@@ -10,7 +10,6 @@ namespace MediaStorage.Common.ViewModels.Administrator
         public string Username { get; set; }
 
         [Display(Name = "Password", Prompt = "Password")]
-        [DataType(DataType.Password)]
         [Required]
         [MaxLength(512)]
         public string Password { get; set; }

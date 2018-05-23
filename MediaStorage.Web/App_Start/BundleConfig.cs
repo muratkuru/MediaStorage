@@ -6,18 +6,23 @@ namespace MediaStorage.Web.App_Start
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-{version}.js"));
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include("~/Scripts/bootstrap.js"));
-            bundles.Add(new ScriptBundle("~/bundles/metisMenu").Include("~/Scripts/metisMenu.js"));
-            bundles.Add(new ScriptBundle("~/bundles/sb-admin-2").Include("~/Scripts/sb-admin-2.js"));
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+            // Administration script bundle
+            bundles.Add(new ScriptBundle("~/Scripts/administration").Include(
+                "~/Scripts/jquery-{version}.js",
                 "~/Scripts/jquery.validate.js",
-                "~/Scripts/jquery.validate.unobtrusive.js"));
+                "~/Scripts/jquery.validate.unobtrusive.js",
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/metisMenu.js",
+                "~/Scripts/sb-admin-2.js"
+            ));
 
-            bundles.Add(new StyleBundle("~/Content/bootstrap").Include("~/Content/bootstrap.css"));
-            bundles.Add(new StyleBundle("~/Content/metisMenu").Include("~/Content/metisMenu.css"));
-            bundles.Add(new StyleBundle("~/Content/font-awesome").Include("~/Content/font-awesome.css"));
-            bundles.Add(new StyleBundle("~/Content/sb-admin-2").Include("~/Content/sb-admin-2.css"));
+            // Administration style bundle
+            bundles.Add(new StyleBundle("~/Content/administration").Include(
+                "~/Content/bootstrap.css",
+                "~/Content/metisMenu.css",
+                "~/Content/font-awesome.css",
+                "~/Content/sb-admin-2.css"
+            ));
         }
     }
 }

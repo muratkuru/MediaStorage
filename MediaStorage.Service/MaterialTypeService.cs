@@ -12,9 +12,9 @@ namespace MediaStorage.Service
     {
         ICollection<MaterialTypeViewModel> GetAllMaterialTypes();
 
-        Result CreateMaterialType(MaterialTypeViewModel model);
+        ServiceResult CreateMaterialType(MaterialTypeViewModel model);
 
-        Result DeleteMaterialType(int id);
+        ServiceResult DeleteMaterialType(int id);
     }
 
     public class MaterialTypeService : IMaterialTypeService
@@ -28,7 +28,7 @@ namespace MediaStorage.Service
             this.materialTypeRepository = materialTypeRepository;
         }
 
-        public Result CreateMaterialType(MaterialTypeViewModel model)
+        public ServiceResult CreateMaterialType(MaterialTypeViewModel model)
         {
             int affectedRows = 0;
 
@@ -44,20 +44,20 @@ namespace MediaStorage.Service
                 }
                 catch(Exception ex)
                 {
-                    return new Result
+                    return new ServiceResult
                     {
-                        IsSuccess = false,
+                        IsSuccessful = false,
                         Message = ex.Message
                     };
                 }
             }
 
             return affectedRows == 1
-                ? new Result { IsSuccess = true, Message = "Ekleme işlemi başarılı." }
-                : new Result { IsSuccess = false, Message = "Ekleme işlemi başarısız." };
+                ? new ServiceResult { IsSuccessful = true, Message = "Ekleme işlemi başarılı." }
+                : new ServiceResult { IsSuccessful = false, Message = "Ekleme işlemi başarısız." };
         }
 
-        public Result DeleteMaterialType(int id)
+        public ServiceResult DeleteMaterialType(int id)
         {
             int affectedRows = 0;
 
@@ -69,16 +69,16 @@ namespace MediaStorage.Service
             }
             catch (Exception ex)
             {
-                return new Result
+                return new ServiceResult
                 {
-                    IsSuccess = false,
+                    IsSuccessful = false,
                     Message = ex.Message
                 };
             }
 
             return affectedRows == 1
-                ? new Result { IsSuccess = false, Message = "Silme işlemi başarılı." }
-                : new Result { IsSuccess = false, Message = "Silme işlemi başarısız." };
+                ? new ServiceResult { IsSuccessful = false, Message = "Silme işlemi başarılı." }
+                : new ServiceResult { IsSuccessful = false, Message = "Silme işlemi başarısız." };
         }
 
         public ICollection<MaterialTypeViewModel> GetAllMaterialTypes()

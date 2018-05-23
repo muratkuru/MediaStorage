@@ -47,5 +47,11 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
 
             return View();
         }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login");
+        }
     }
 }

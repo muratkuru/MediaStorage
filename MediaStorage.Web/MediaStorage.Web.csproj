@@ -128,17 +128,11 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Areas\Panel\Views\web.config" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="Areas\Panel\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Panel\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Panel\Views\Dashboard\Index.cshtml" />
-    <Content Include="Areas\Panel\Views\MaterialType\Index.cshtml" />
-    <Content Include="Areas\Panel\Views\MaterialType\Create.cshtml" />
     <Content Include="Areas\Administration\Views\web.config" />
     <Content Include="Areas\Administration\Views\Account\Login.cshtml" />
     <Content Include="Areas\Administration\Views\Dashboard\Index.cshtml" />
@@ -169,10 +163,6 @@
     <Compile Include="Areas\Administration\Controllers\AccountController.cs" />
     <Compile Include="Areas\Administration\Controllers\BaseController.cs" />
     <Compile Include="Areas\Administration\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\Panel\Controllers\BaseController.cs" />
-    <Compile Include="Areas\Panel\Controllers\DashboardController.cs" />
-    <Compile Include="Areas\Panel\Controllers\MaterialTypeController.cs" />
-    <Compile Include="Areas\Panel\PanelAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -200,8 +190,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Administration\Models\" />
     <Folder Include="Areas\Administration\Views\Base\" />
-    <Folder Include="Areas\Panel\Models\" />
-    <Folder Include="Areas\Panel\Views\Base\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

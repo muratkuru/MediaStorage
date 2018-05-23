@@ -34,7 +34,7 @@ namespace MediaStorage.Web.Areas.Panel.Controllers
         [HttpPost]
         public ActionResult Create(MaterialTypeViewModel model)
         {
-            Result result = null;
+            ServiceResult result = null;
 
             if (ModelState.IsValid)
             {
@@ -42,14 +42,14 @@ namespace MediaStorage.Web.Areas.Panel.Controllers
             }
             else
             {
-                result = new Result
+                result = new ServiceResult
                 {
-                    IsSuccess = false,
+                    IsSuccessful = false,
                     Message = "Ekleme işlemi başarısız."
                 };
             }
 
-            if (!result.IsSuccess)
+            if (!result.IsSuccessful)
                 ModelState.AddModelError("error", result.Message);
 
             return View(model);
@@ -57,7 +57,7 @@ namespace MediaStorage.Web.Areas.Panel.Controllers
 
         public ActionResult Delete(int id)
         {
-            Result result = materialTypeService.DeleteMaterialType(id);
+            ServiceResult result = materialTypeService.DeleteMaterialType(id);
 
             return RedirectToAction("Index");
         }

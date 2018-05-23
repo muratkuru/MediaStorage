@@ -1,22 +1,22 @@
 ﻿using System.Web.Mvc;
 
-namespace MediaStorage.Web.Areas.Account
+namespace MediaStorage.Web.Areas.Administration
 {
-    public class AccountAreaRegistration : AreaRegistration 
+    public class AdministrationAreaRegistration : AreaRegistration 
     {
         public override string AreaName 
         {
             get 
             {
-                return "Account";
+                return "Administration";
             }
         }
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "Account_default",
-                "Account/{controller}/{action}/{id}",
+                "Administration_default",
+                "Administration/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }

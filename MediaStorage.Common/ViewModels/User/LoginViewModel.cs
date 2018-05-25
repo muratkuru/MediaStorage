@@ -1,17 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MediaStorage.Common.ViewModels.Administrator
+namespace MediaStorage.Common.ViewModels.User
 {
     public class LoginViewModel
     {
-        [Display(Name = "Username", Prompt = "Username")]
+        [Display(Name = "Username")]
         [Required]
-        [MaxLength(30)]
+        [MaxLength(255)]
         public string Username { get; set; }
 
-        [Display(Name = "Password", Prompt = "Password")]
+        [Display(Name = "Password")]
         [Required]
-        [MaxLength(512)]
+        [MaxLength(255)]
         public string Password { get; set; }
     }
 }

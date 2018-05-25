@@ -1,4 +1,4 @@
-﻿using MediaStorage.Common.ViewModels.Administrator;
+﻿using MediaStorage.Common.ViewModels.User;
 using MediaStorage.Service;
 using System;
 using System.Web;

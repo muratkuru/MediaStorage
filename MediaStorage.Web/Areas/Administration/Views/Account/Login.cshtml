@@ -1,4 +1,4 @@
-﻿@model MediaStorage.Common.ViewModels.Administrator.LoginViewModel
+﻿@model MediaStorage.Common.ViewModels.User.LoginViewModel
 @{
     Layout = null;
 }
@@ -42,11 +42,9 @@
                             <fieldset>
                                 <div class="form-group">
                                     @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = Html.DisplayNameFor(d => d.Username) })
-                                    @Html.ValidationMessageFor(m => m.Username)
                                 </div>
                                 <div class="form-group">
                                     @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Html.DisplayNameFor(d => d.Password) })
-                                    @Html.ValidationMessageFor(m => m.Password)
                                 </div>
                                 <!-- <div class="checkbox">
                                     <label>
@@ -55,8 +53,8 @@
                                 </div> -->
                                 <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
                             </fieldset>
+                            @Html.ValidationSummary("", new { @class = "alert alert-danger login-alert" }, "div")
                         </form>
-                        <h1>@TempData["Message"]</h1>
                     </div>
                 </div>
             </div>

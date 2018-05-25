@@ -1,10 +1,4 @@
-﻿
-@{
-    Layout = null;
-    var menu = ViewBag.Menu as ICollection<MediaStorage.Data.Entities.Page>;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -261,41 +255,7 @@
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
-                        @if (menu != null)
-                        {
-                            foreach (var item in menu)
-                            {
-                                <li>
-                                    <a href="@Url.Action(item.Action, item.Controller, new { area = item.Area })">
-                                        <i class="@item.Icon"></i> @item.Title<span class="@(item.SubPages.Count > 0 ? "fa arrow" : "hide")"></span>
-                                    </a>
-                                    @if (item.SubPages != null)
-                                    {
-                                        <ul class="nav nav-second-level">
-                                            @foreach (var subItem in item.SubPages)
-                                            {
-                                                <li>
-                                                    <a href="@Url.Action(subItem.Action, subItem.Controller, new { area = subItem.Area })"><i class="@subItem.Icon"></i> @subItem.Title</a>
-                                                </li>
-                                            }
-                                        </ul>
-                                    }
-                                </li>
-                            }
-                        }
-                    </ul>
+                    @RenderPage("_Sidebar.cshtml")
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
@@ -307,7 +267,6 @@
             <div class="container-fluid">
                 <div class="row">
                     @RenderBody()
-
                 </div>
                 <!-- /.row -->
             </div>

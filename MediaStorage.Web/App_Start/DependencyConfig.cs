@@ -19,9 +19,10 @@ namespace MediaStorage.Web.App_Start
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
             builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>));
 
-            builder.RegisterType<PageService>().As<IPageService>();
+            builder.RegisterType<MenuService>().As<IMenuService>();
             builder.RegisterType<MaterialTypeService>().As<IMaterialTypeService>();
-            builder.RegisterType<AdministratorService>().As<IAdministratorService>();
+            builder.RegisterType<UserService>().As<IAdministratorService>();
+            builder.RegisterType<UserRoleService>().As<IUserRoleService>();
 
             IContainer container = builder.Build();
 

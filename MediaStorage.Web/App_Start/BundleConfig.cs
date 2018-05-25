@@ -21,7 +21,8 @@ namespace MediaStorage.Web.App_Start
                 "~/Content/bootstrap.css",
                 "~/Content/metisMenu.css",
                 "~/Content/font-awesome.css",
-                "~/Content/sb-admin-2.css"
+                "~/Content/sb-admin-2.css",
+                "~/Content/custom.css"
             ));
         }
     }

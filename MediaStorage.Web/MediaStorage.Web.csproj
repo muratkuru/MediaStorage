@@ -122,7 +122,7 @@
     <Content Include="Content\metisMenu.min.css" />
     <Content Include="Content\sb-admin-2.css" />
     <Content Include="Content\sb-admin-2.min.css" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\custom.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -138,6 +138,9 @@
     <Content Include="Areas\Administration\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Administration\Views\UserRole\AddOrUpdate.cshtml" />
+    <Content Include="Areas\Administration\Views\Shared\_Sidebar.cshtml" />
+    <Content Include="Areas\Administration\Views\Menu\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -163,6 +166,8 @@
     <Compile Include="Areas\Administration\Controllers\AccountController.cs" />
     <Compile Include="Areas\Administration\Controllers\BaseController.cs" />
     <Compile Include="Areas\Administration\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Administration\Controllers\MenuController.cs" />
+    <Compile Include="Areas\Administration\Controllers\UserRoleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -189,7 +194,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Administration\Models\" />
-    <Folder Include="Areas\Administration\Views\Base\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

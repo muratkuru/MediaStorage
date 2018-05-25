@@ -1,0 +1,45 @@
+﻿@{
+    var menu = ViewBag.Menu as ICollection<MediaStorage.Data.Entities.MenuItem>;
+}
+
+<ul class="nav" id="side-menu">
+    <li class="sidebar-search">
+        <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+        <!-- /input-group -->
+    </li>
+    @if (menu != null)
+    {
+        foreach (var item in menu)
+        {
+            <li>
+                @{ 
+                    string url = string.IsNullOrWhiteSpace(item.Controller) && string.IsNullOrWhiteSpace(item.Action)
+                        ? "#"
+                        : Url.Action(item.Action, item.Controller, new { area = item.Area });
+                }
+                <a href="@url">
+                    <i class="@item.Icon"></i> @item.Title<span class="@(item.SubMenuItems.Count > 0 ? "fa arrow" : "hide")"></span>
+                </a>
+                @if (item.SubMenuItems.Count > 0)
+                {
+                    <ul class="nav nav-second-level">
+                        @foreach (var subItem in item.SubMenuItems)
+                        {
+                            <li>
+                                <a href="@Url.Action(subItem.Action, subItem.Controller, new { area = subItem.Area })"><i class="@subItem.Icon"></i> @subItem.Title</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+    }
+</ul>
+

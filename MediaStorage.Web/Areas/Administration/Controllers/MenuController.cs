@@ -1,13 +1,16 @@
 ﻿using MediaStorage.Service;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MediaStorage.Web.Areas.Administration.Controllers
 {
-    [Authorize]
-    public class DashboardController : BaseController
+    public class MenuController : BaseController
     {
-        public DashboardController(IMenuService pageService) 
-            : base(pageService)
+        public MenuController(IMenuService menuService)
+            : base(menuService)
         {
 
         }

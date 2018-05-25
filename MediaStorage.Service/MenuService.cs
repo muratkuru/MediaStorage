@@ -44,7 +44,7 @@ namespace MediaStorage.Service
         public MenuViewModel GetMenuById(int id)
         {
             var menu = menuRepository.Find(id);
-            return new MenuViewModel
+            return menu == null ? null : new MenuViewModel
             {
                 Id = menu.Id,
                 Name = menu.Name,

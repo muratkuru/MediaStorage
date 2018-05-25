@@ -1,9 +1,5 @@
 ﻿using MediaStorage.Common.ViewModels.Menu;
 using MediaStorage.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MediaStorage.Web.Areas.Administration.Controllers
@@ -23,14 +19,19 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View(menuService.GetAllMenus());
         }
 
-        public ActionResult AddOrUpdate(int? id)
+        public ActionResult AddOrUpdate(string id)
         {
-            if(id.HasValue)
+            if(!string.IsNullOrEmpty(id))
             {
-                var menu = menuService.GetMenuById(id.Value);
-                if (menu == null)
+                if (int.TryParse(id, out int outID))
+                {
+                    var menu = menuService.GetMenuById(outID);
+                    if (menu == null)
+                        return RedirectToAction("Index");
+                    return View(menu);
+                }
+                else
                     return RedirectToAction("Index");
-                return View(menu);
             }
             return View();
         }

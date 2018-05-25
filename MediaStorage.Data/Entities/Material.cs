@@ -34,11 +34,11 @@ namespace MediaStorage.Data.Entities
             HasKey(m => m.Id);
             HasIndex(m => m.InternationalNumber).IsUnique();
             Property(m => m.InternationalNumber)
-                .HasMaxLength(30)
+                .HasMaxLength(255)
                 .IsRequired();
             Property(m => m.Title)
                 .IsRequired()
-                .HasMaxLength(512);
+                .HasMaxLength(255);
             HasMany(m => m.Stocks)
                 .WithRequired()
                 .HasForeignKey(m => m.MaterialId);

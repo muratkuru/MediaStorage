@@ -24,14 +24,14 @@ namespace MediaStorage.Data.Entities
             HasKey(m => m.Id);
             Property(m => m.Name)
                 .IsRequired()
-                .HasMaxLength(200);
+                .HasMaxLength(255);
             Property(m => m.MaterialTypeId).IsRequired();
             HasMany(m => m.Materials)
                 .WithMany(m => m.Categories)
                 .Map(m =>
                 {
-                    m.MapLeftKey("MaterialId");
                     m.MapRightKey("CategoryId");
+                    m.MapLeftKey("MaterialId");
                 });
         }
     }

@@ -29,6 +29,9 @@ namespace MediaStorage.Data.Entities
             HasKey(m => m.Id);
             Property(m => m.Barcode)
                 .IsRequired();
+            Property(m => m.Location)
+                .IsRequired()
+                .HasMaxLength(255);
             HasMany(m => m.Reservations)
                 .WithRequired()
                 .HasForeignKey(m => m.StockId);

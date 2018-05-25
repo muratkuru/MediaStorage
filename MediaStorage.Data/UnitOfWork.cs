@@ -19,11 +19,9 @@ namespace MediaStorage.Data
             {
                 try
                 {
-                    var saveChanges = SaveChangesAsync();
+                    commitCount = SaveChanges();
 
                     transaction.Commit();
-
-                    commitCount = saveChanges.Result;
                 }
                 catch (Exception ex)
                 {

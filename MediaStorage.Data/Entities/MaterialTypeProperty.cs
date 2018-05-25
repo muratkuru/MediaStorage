@@ -19,7 +19,7 @@ namespace MediaStorage.Data.Entities
             HasKey(m => m.Id);
             Property(m => m.Name)
                 .IsRequired()
-                .HasMaxLength(200);
+                .HasMaxLength(255);
             HasMany(m => m.MaterialPropertyItems)
                 .WithRequired(m => m.MaterialTypeProperty)
                 .HasForeignKey(m => m.MaterialTypePropertyId);

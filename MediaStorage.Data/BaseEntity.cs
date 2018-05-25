@@ -6,7 +6,7 @@ namespace MediaStorage.Data
     {
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
-        public DateTime? UpdatedDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
 
         public bool IsRemoved { get; set; } = false;
     }

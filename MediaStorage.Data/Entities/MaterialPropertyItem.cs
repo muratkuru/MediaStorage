@@ -17,7 +17,8 @@
         {
             HasKey(m => m.Id);
             Property(m => m.Name)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(255);
         }
     }
 }

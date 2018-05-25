@@ -11,8 +11,8 @@ namespace MediaStorage.Data.Entities
         public int StockId { get; set; }
         public virtual Stock Stock { get; set; }
 
-        public Guid UserId { get; set; }
-        public virtual User User { get; set; }
+        public Guid MemberId { get; set; }
+        public virtual Member Member { get; set; }
     }
 
     class LendingConfiguration : BaseConfiguration<Lending>

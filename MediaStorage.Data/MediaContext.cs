@@ -37,9 +37,12 @@ namespace MediaStorage.Data
 
         public DbSet<User> Users { get; set; }
 
-        public DbSet<Page> Pages { get; set; }
+        public DbSet<Member> Members { get; set; }
 
-        public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<Menu> Menus { get; set; }
+
+        public DbSet<MenuItem> MenuItems { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -58,9 +61,10 @@ namespace MediaStorage.Data
             modelBuilder.Configurations.Add(new LendingConfiguration());
             modelBuilder.Configurations.Add(new StockConfiguration());
             modelBuilder.Configurations.Add(new TagConfiguration());
+            modelBuilder.Configurations.Add(new MemberConfiguration());
+            modelBuilder.Configurations.Add(new MenuConfiguration());
+            modelBuilder.Configurations.Add(new MenuItemConfiguration());
             modelBuilder.Configurations.Add(new UserConfiguration());
-            modelBuilder.Configurations.Add(new PageConfiguration());
-            modelBuilder.Configurations.Add(new AdministratorConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

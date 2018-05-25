@@ -49,7 +49,8 @@
   <ItemGroup>
     <Compile Include="BaseConfiguration.cs" />
     <Compile Include="BaseEntity.cs" />
-    <Compile Include="Entities\Administrator.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\Menu.cs" />
     <Compile Include="Entities\Lending.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Department.cs" />
@@ -58,21 +59,18 @@
     <Compile Include="Entities\MaterialTypeProperty.cs" />
     <Compile Include="Entities\MaterialPropertyItem.cs" />
     <Compile Include="Entities\MaterialType.cs" />
-    <Compile Include="Entities\Page.cs" />
+    <Compile Include="Entities\MenuItem.cs" />
     <Compile Include="Entities\Reservation.cs" />
     <Compile Include="Entities\Stock.cs" />
     <Compile Include="Entities\Tag.cs" />
-    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\Member.cs" />
+    <Compile Include="Entities\UserRole.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="MediaContext.cs" />
-    <Compile Include="Migrations\201805221345563_MajorUpdates.cs" />
-    <Compile Include="Migrations\201805221345563_MajorUpdates.Designer.cs">
-      <DependentUpon>201805221345563_MajorUpdates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805230221055_MinorUpdates.cs" />
-    <Compile Include="Migrations\201805230221055_MinorUpdates.Designer.cs">
-      <DependentUpon>201805230221055_MinorUpdates.cs</DependentUpon>
+    <Compile Include="Migrations\201805241100559_InitialMigration.cs" />
+    <Compile Include="Migrations\201805241100559_InitialMigration.Designer.cs">
+      <DependentUpon>201805241100559_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,11 +86,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805221345563_MajorUpdates.resx">
-      <DependentUpon>201805221345563_MajorUpdates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805230221055_MinorUpdates.resx">
-      <DependentUpon>201805230221055_MinorUpdates.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805241100559_InitialMigration.resx">
+      <DependentUpon>201805241100559_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

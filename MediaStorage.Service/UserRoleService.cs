@@ -23,36 +23,31 @@ namespace MediaStorage.Service
         
         public ServiceResult AddOrUpdate(UserRolePostViewModel model)
         {
-            int affectedRows = 0;
-
-            if(model != null)
+            if (model.Id.HasValue)
             {
-                if (model.Id.HasValue)
+                var user = userRoleRepository.Find(model.Id.Value);
+                if (user == null)
+                    return new ServiceResult(false, "There is no User Role for this ID.");
+
+                userRoleRepository.Update(new UserRole
                 {
-                    var user = userRoleRepository.Find(model.Id.Value);
-                    if (user == null)
-                        return new ServiceResult(false, "There is no User Role for this ID.");
-
-                    userRoleRepository.Update(new UserRole
-                    {
-                        Id = model.Id.Value,
-                        Name = model.Name
-                    });
-                }
-                else
-                    userRoleRepository.Add(new UserRole
-                    {
-                        Name = model.Name
-                    });
-
-                affectedRows = uow.Commit();
+                    Id = model.Id.Value,
+                    Name = model.Name
+                });
+            }
+            else
+            {
+                userRoleRepository.Add(new UserRole
+                {
+                    Name = model.Name
+                });
             }
 
             string message = model.Id.HasValue
                 ? "The update process has "
                 : "The add process has ";
 
-            return affectedRows == 1
+            return uow.Commit() == 1
                 ? new ServiceResult(true, message + "successful.")
                 : new ServiceResult(false, message + "been unsuccessful.");
         }

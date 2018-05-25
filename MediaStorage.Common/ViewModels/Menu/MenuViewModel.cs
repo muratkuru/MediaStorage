@@ -4,7 +4,7 @@ namespace MediaStorage.Common.ViewModels.Menu
 {
     public class MenuViewModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Display(Name = "Name")]
         [Required]

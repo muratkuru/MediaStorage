@@ -22,5 +22,27 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
         {
             return View(menuService.GetAllMenus());
         }
+
+        public ActionResult AddOrUpdate(int? id)
+        {
+            if(id.HasValue)
+            {
+                var menu = menuService.GetMenuById(id.Value);
+                if (menu == null)
+                    return RedirectToAction("Index");
+                return View(menu);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddOrUpdate(MenuViewModel model)
+        {
+            if(ModelState.IsValid)
+                TempData["result"] = menuService.AddOrUpdateMenu(model);
+
+            return View();
+        }
     }
 }

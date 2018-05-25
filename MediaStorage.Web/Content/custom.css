@@ -2,10 +2,14 @@
     display: none;
 }
 
-.login-alert {
+.custom-alert {
     margin-top: 20px;
 }
 
 .add-button {
     margin: 10px auto;
+}
+
+.add-or-update-form .form-control {
+    margin: 14px auto;
 }

@@ -141,6 +141,7 @@
     <Content Include="Areas\Administration\Views\UserRole\AddOrUpdate.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_Sidebar.cshtml" />
     <Content Include="Areas\Administration\Views\Menu\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Menu\AddOrUpdate.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -172,6 +173,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HtmlHelpers\ResultHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@
 <div class="col-md-12">
     <h1>@ViewBag.Title <small>List</small></h1>
     <a href="@Url.Action("AddOrUpdate")" class="btn btn-primary form-control add-button"><i class="fa fa-plus"></i> Add New Menu</a>
+    @Html.ShowResult()
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
             <thead>
@@ -28,7 +29,7 @@
                         <a href="@Url.Action("Index", "MenuItem", new { id = item.Id })" class="btn btn-info">
                             <i class="fa fa-sitemap"></i>
                         </a>
-                        <a onclick="return confirm('Are you sure?');" href="@Url.Action("Remove")" class="btn btn-danger">
+                        <a onclick="return confirm('Are you sure?');" href="@Url.Action("Remove", new { id = item.Id })" class="btn btn-danger">
                             <i class="fa fa-trash"></i>
                         </a>
                         <a href="@Url.Action("AddOrUpdate", new { id = item.Id })" class="btn btn-warning">

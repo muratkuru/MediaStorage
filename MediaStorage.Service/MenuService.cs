@@ -15,6 +15,8 @@ namespace MediaStorage.Service
 
         ServiceResult AddOrUpdateMenu(MenuViewModel model);
 
+        ServiceResult RemoveMenu(int id);
+
         ICollection<MenuItem> GetAllMenuItems();
     }
 
@@ -81,6 +83,15 @@ namespace MediaStorage.Service
             return uow.Commit() == 1
                 ? new ServiceResult(true, message + "successful.")
                 : new ServiceResult(false, message + "been unsuccessful.");
+        }
+
+        public ServiceResult RemoveMenu(int id)
+        {
+            menuRepository.Delete(id);
+
+            return uow.Commit() == 1
+                ? new ServiceResult(true, "The remove process has successful.")
+                : new ServiceResult(false, "The remove process has been unsuccessful.");
         }
 
         public ICollection<MenuItem> GetAllMenuItems()

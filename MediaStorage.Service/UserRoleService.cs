@@ -2,12 +2,20 @@
 using MediaStorage.Common.ViewModels.UserRole;
 using MediaStorage.Data;
 using MediaStorage.Data.Entities;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MediaStorage.Service
 {
     public interface IUserRoleService
     {
-        ServiceResult AddOrUpdate(UserRolePostViewModel model);
+        ICollection<UserRoleViewModel> GetAllUserRoles();
+
+        UserRoleViewModel GetUserRoleById(int id);
+
+        ServiceResult AddOrUpdateUserRole(UserRoleViewModel model);
+
+        ServiceResult RemoveUserRole(int id);
     }
 
     public class UserRoleService : IUserRoleService
@@ -20,15 +28,31 @@ namespace MediaStorage.Service
             this.uow = uow;
             this.userRoleRepository = userRoleRepository;
         }
-        
-        public ServiceResult AddOrUpdate(UserRolePostViewModel model)
+
+        public ICollection<UserRoleViewModel> GetAllUserRoles()
+        {
+            return userRoleRepository.GetAll().Select(s => new UserRoleViewModel
+            {
+                Id = s.Id,
+                Name = s.Name
+            }).ToList();
+        }
+
+        public UserRoleViewModel GetUserRoleById(int id)
+        {
+            var userRole = userRoleRepository.Find(id);
+            return userRole == null ? null : new UserRoleViewModel
+            {
+                Id = userRole.Id,
+                Name = userRole.Name
+            };
+        }
+
+
+        public ServiceResult AddOrUpdateUserRole(UserRoleViewModel model)
         {
             if (model.Id.HasValue)
             {
-                var user = userRoleRepository.Find(model.Id.Value);
-                if (user == null)
-                    return new ServiceResult(false, "There is no User Role for this ID.");
-
                 userRoleRepository.Update(new UserRole
                 {
                     Id = model.Id.Value,
@@ -50,6 +74,15 @@ namespace MediaStorage.Service
             return uow.Commit() == 1
                 ? new ServiceResult(true, message + "successful.")
                 : new ServiceResult(false, message + "been unsuccessful.");
+        }
+
+        public ServiceResult RemoveUserRole(int id)
+        {
+            userRoleRepository.Delete(id);
+
+            return uow.Commit() == 1
+                ? new ServiceResult(true, "The remove process has successful.")
+                : new ServiceResult(false, "The remove process has been unsuccessful.");
         }
     }
 }

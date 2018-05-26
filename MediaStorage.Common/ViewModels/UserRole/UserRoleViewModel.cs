@@ -2,7 +2,7 @@
 
 namespace MediaStorage.Common.ViewModels.UserRole
 {
-    public class UserRolePostViewModel
+    public class UserRoleViewModel
     {
         public int? Id { get; set; }
 

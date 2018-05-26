@@ -78,8 +78,6 @@ namespace MediaStorage.Service
                 ? "The update process has "
                 : "The add process has ";
 
-
-
             return uow.Commit() == 1
                 ? new ServiceResult(true, message + "successful.")
                 : new ServiceResult(false, message + "been unsuccessful.");

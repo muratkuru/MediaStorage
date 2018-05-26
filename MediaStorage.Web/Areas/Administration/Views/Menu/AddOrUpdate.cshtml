@@ -2,12 +2,11 @@
 
 @{
     ViewBag.Title = "Menu";
-    string subTitle = ViewContext.RouteData.Values["id"] == null ? "Add" : "Update";
 }
 
 <div class="col-md-12">
-    <h1>@ViewBag.Title <small>@subTitle</small></h1>
-    <div class="col-md-8">
+    <h1>@ViewBag.Title <small>@Html.GetAddOrUpdateSubTitle()</small></h1>
+    <div class="col-md-12">
         <form class="add-or-update-form" action="@Url.Action("AddOrUpdate")" method="post">
             @Html.AntiForgeryToken()
 
@@ -18,7 +17,7 @@
                 <i class="fa fa-save"></i> Save
             </button>
             @Html.ShowResult()
-            @Html.ValidationSummary("", new { @class = "alert alert-danger custom-alert" }, "div")
+            @Html.ValidationSummary("", new { @class = "alert alert-danger custom-alert" })
         </form>
     </div>
 </div>

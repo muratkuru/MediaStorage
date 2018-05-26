@@ -1,4 +1,5 @@
-﻿using MediaStorage.Common.ViewModels.UserRole;
+﻿using MediaStorage.Common;
+using MediaStorage.Common.ViewModels.UserRole;
 using MediaStorage.Service;
 using System;
 using System.Collections.Generic;
@@ -20,22 +21,49 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View(userRoleService.GetAllUserRoles());
         }
 
-        public ActionResult AddOrUpdate(int? id)
+        public ActionResult AddOrUpdate(string id)
         {
-            ViewBag.Title = id.HasValue ? "Update" : "Add";
+            if(!string.IsNullOrEmpty(id))
+            {
+                if(int.TryParse(id, out int outID))
+                {
+                    var userRole = userRoleService.GetUserRoleById(outID);
+                    if(userRole == null)
+                    {
+                        TempData["result"] = new ServiceResult(false, "There is no UserRole record for this ID.");
+                        return RedirectToAction("Index");
+                    }
+                    return View(userRole);
+                }
+                else
+                {
+                    TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                    return RedirectToAction("Index");
+                }
+            }
             return View();
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public ActionResult AddOrUpdate(UserRolePostViewModel model)
+        [ValidateAntiForgeryToken]
+        public ActionResult AddOrUpdate(UserRoleViewModel model)
         {
             if (ModelState.IsValid)
-                return Json(userRoleService.AddOrUpdate(model));
+                TempData["result"] = userRoleService.AddOrUpdateUserRole(model);
+
             return View();
+        }
+
+        public ActionResult Remove(string id)
+        {
+            if (int.TryParse(id, out int outID))
+                TempData["result"] = userRoleService.RemoveUserRole(outID);
+            else
+                TempData["result"] = new ServiceResult(false, "Invalid ID.");
+            return RedirectToAction("Index");
         }
     }
 }

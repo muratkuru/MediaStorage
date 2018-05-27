@@ -1,4 +1,5 @@
 ﻿using MediaStorage.Common;
+using MediaStorage.Common.ViewModels;
 using MediaStorage.Common.ViewModels.Menu;
 using MediaStorage.Data;
 using MediaStorage.Data.Entities;
@@ -18,6 +19,14 @@ namespace MediaStorage.Service
         ServiceResult RemoveMenu(int id);
 
         ICollection<MenuItem> GetAllMenuItems();
+
+        ICollection<MenuItemListViewModel> GetMenuItemsByMenuId(int menuId);
+
+        MenuItemAddOrUpdateViewModel GetMenuItemsForAddOrUpdate(int? id);
+
+        ServiceResult AddOrUpdateMenuItem(MenuItemPostViewModel model);
+
+        ServiceResult RemoveMenuItem(int id);
     }
 
     public class MenuService : IMenuService
@@ -35,7 +44,7 @@ namespace MediaStorage.Service
 
         public ICollection<MenuViewModel> GetAllMenus()
         {
-            return menuRepository.GetAll().Select(s => new MenuViewModel
+            return menuRepository.GetAll(w => !w.IsRemoved).Select(s => new MenuViewModel
             {
                 Id = s.Id,
                 Name = s.Name,
@@ -56,7 +65,7 @@ namespace MediaStorage.Service
 
         public ServiceResult AddOrUpdateMenu(MenuViewModel model)
         {
-            if(model.Id.HasValue)
+            if (model.Id.HasValue)
             {
                 menuRepository.Update(new Menu
                 {
@@ -95,8 +104,78 @@ namespace MediaStorage.Service
         public ICollection<MenuItem> GetAllMenuItems()
         {
             return menuItemRepository
-                .GetAll(w => w.ParentMenuItemId == null, i => i.SubMenuItems)
+                .GetAll(w => !w.IsRemoved && w.ParentMenuItemId == null, i => i.SubMenuItems)
                 .ToList();
+        }
+
+        public ICollection<MenuItemListViewModel> GetMenuItemsByMenuId(int menuId)
+        {
+            return menuItemRepository
+                    .GetAll(w => !w.IsRemoved, i => i.Menu, i => i.ParentMenuItem)
+                    .Where(w => w.MenuId == menuId)
+                    .Select(s => new MenuItemListViewModel
+                    {
+                        Id = s.Id,
+                        Title = s.Title,
+                        Action = s.Action,
+                        Controller = s.Controller,
+                        Area = s.Area,
+                        Icon = s.Icon,
+                        RowIndex = s.RowIndex,
+                        Menu = s.Menu.Name,
+                        ParentMenuItem = s.ParentMenuItem.Title
+                    }).ToList();
+        }
+
+        public MenuItemAddOrUpdateViewModel GetMenuItemsForAddOrUpdate(int? id)
+        {
+            var menus = menuRepository
+                .GetAll(w => !w.IsRemoved)
+                .Select(s => new SelectListViewModel
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name
+                }).ToList();
+            var parentMenuItems = menuItemRepository
+                .GetAll(w => !w.IsRemoved)
+                .Select(s => new SelectListViewModel
+                {
+                    Value = s.Id.ToString(),
+                    Text = $"{s.Area}/{s.Controller}/{s.Action}"
+                }).ToList();
+
+            if (id.HasValue)
+            {
+                var menuItem = menuItemRepository.Find(id.Value);
+                return menuItem == null ? null : new MenuItemAddOrUpdateViewModel
+                {
+                    Id = menuItem.Id,
+                    Title = menuItem.Title,
+                    Action = menuItem.Action,
+                    Controller = menuItem.Controller,
+                    Area = menuItem.Area,
+                    Icon = menuItem.Icon,
+                    RowIndex = menuItem.RowIndex,
+                    Menus = menus,
+                    ParentMenuItems = parentMenuItems
+                };
+            }
+
+            return new MenuItemAddOrUpdateViewModel
+            {
+                Menus = menus,
+                ParentMenuItems = parentMenuItems
+            };
+        }
+
+        public ServiceResult AddOrUpdateMenuItem(MenuItemPostViewModel model)
+        {
+            return null;
+        }
+
+        public ServiceResult RemoveMenuItem(int id)
+        {
+            return null;
         }
     }
 }

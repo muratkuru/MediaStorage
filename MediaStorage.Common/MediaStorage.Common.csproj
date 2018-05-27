@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceResult.cs" />
+    <Compile Include="ViewModels\Menu\MenuItemListViewModel.cs" />
+    <Compile Include="ViewModels\Menu\MenuItemPostViewModel.cs" />
     <Compile Include="ViewModels\Menu\MenuViewModel.cs" />
     <Compile Include="ViewModels\UserRole\UserRoleViewModel.cs" />
     <Compile Include="ViewModels\User\LoginViewModel.cs" />

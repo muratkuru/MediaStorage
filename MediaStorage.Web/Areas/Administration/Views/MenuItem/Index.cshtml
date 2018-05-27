@@ -1,0 +1,80 @@
+﻿@model IEnumerable<MediaStorage.Common.ViewModels.Menu.MenuItemListViewModel>
+
+@{
+    ViewBag.Title = "Menu Item";
+}
+
+<div class="col-md-12">
+    <h1>@ViewBag.Title <small>List</small></h1>
+    <div class="row" style="margin-bottom:10px">
+        <div class="col-md-6">
+            <a href="@Url.Action("Index", "Menu")" class="btn btn-success form-control"><i class="fa fa-list"></i> Menu List</a>
+        </div>
+        <div class="col-md-6">
+            <a href="@Url.Action("AddOrUpdate")" class="btn btn-primary form-control"><i class="fa fa-plus"></i> Add New Menu Item</a>
+        </div>
+    </div>
+    @Html.ShowResult()
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Action)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Controller)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Area)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Icon)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.RowIndex)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Menu)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ParentMenuItem)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            <input type="checkbox" />
+                        </td>
+                        <td>@item.Title</td>
+                        <td>@item.Action</td>
+                        <td>@item.Controller</td>
+                        <td>@item.Area</td>
+                        <td>@item.Icon</td>
+                        <td>@item.RowIndex</td>
+                        <td>@item.Menu</td>
+                        <td>@item.ParentMenuItem</td>
+                        <td class="col-md-1" style="text-align: center">
+                            <a onclick="return confirm('Are you sure?');" href="@Url.Action("Remove", new { id = item.Id })" class="btn btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                            <a href="@Url.Action("AddOrUpdate", new { id = item.Id })" class="btn btn-warning">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

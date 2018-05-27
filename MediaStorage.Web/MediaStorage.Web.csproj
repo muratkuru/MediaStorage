@@ -143,6 +143,8 @@
     <Content Include="Areas\Administration\Views\Menu\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Menu\AddOrUpdate.cshtml" />
     <Content Include="Areas\Administration\Views\UserRole\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\MenuItem\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\MenuItem\AddOrUpdate.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -169,6 +171,7 @@
     <Compile Include="Areas\Administration\Controllers\BaseController.cs" />
     <Compile Include="Areas\Administration\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Administration\Controllers\MenuController.cs" />
+    <Compile Include="Areas\Administration\Controllers\MenuItemController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserRoleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">

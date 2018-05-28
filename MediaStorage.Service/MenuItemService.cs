@@ -74,7 +74,9 @@ namespace MediaStorage.Service
         public ICollection<MenuItem> GetAdministrationMenuItems()
         {
             return menuItemRepository
-                .GetAll(w => w.ParentMenuItem == null, i => i.SubMenuItems).ToList();
+                .GetAll(w => w.ParentMenuItem == null && w.Menu.Name == "Administration", i => i.SubMenuItems)
+                .OrderBy(o => o.RowIndex)
+                .ToList();
         }
 
         public ICollection<MenuItemListViewModel> GetMenuItemsByFilter(int? menuId)

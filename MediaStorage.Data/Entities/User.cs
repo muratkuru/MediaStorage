@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MediaStorage.Data.Entities
 {
@@ -24,6 +25,9 @@ namespace MediaStorage.Data.Entities
         {
             HasKey(m => m.Id);
             HasIndex(m => m.Username).IsUnique();
+
+            Property(m => m.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(m => m.Username)
                 .IsRequired()
                 .HasMaxLength(30);

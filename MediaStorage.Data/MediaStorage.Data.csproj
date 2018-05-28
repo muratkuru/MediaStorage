@@ -67,21 +67,9 @@
     <Compile Include="Entities\UserRole.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="MediaContext.cs" />
-    <Compile Include="Migrations\201805241100559_InitialMigration.cs" />
-    <Compile Include="Migrations\201805241100559_InitialMigration.Designer.cs">
-      <DependentUpon>201805241100559_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805271429410_MenuItemUserRolesUpdate.cs" />
-    <Compile Include="Migrations\201805271429410_MenuItemUserRolesUpdate.Designer.cs">
-      <DependentUpon>201805271429410_MenuItemUserRolesUpdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805281023413_UpdateBaseEntity.cs" />
-    <Compile Include="Migrations\201805281023413_UpdateBaseEntity.Designer.cs">
-      <DependentUpon>201805281023413_UpdateBaseEntity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201805281335050_UserUserRole.cs" />
-    <Compile Include="Migrations\201805281335050_UserUserRole.Designer.cs">
-      <DependentUpon>201805281335050_UserUserRole.cs</DependentUpon>
+    <Compile Include="Migrations\201805281424549_Migration.cs" />
+    <Compile Include="Migrations\201805281424549_Migration.Designer.cs">
+      <DependentUpon>201805281424549_Migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,17 +85,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805241100559_InitialMigration.resx">
-      <DependentUpon>201805241100559_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805271429410_MenuItemUserRolesUpdate.resx">
-      <DependentUpon>201805271429410_MenuItemUserRolesUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805281023413_UpdateBaseEntity.resx">
-      <DependentUpon>201805281023413_UpdateBaseEntity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805281335050_UserUserRole.resx">
-      <DependentUpon>201805281335050_UserUserRole.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805281424549_Migration.resx">
+      <DependentUpon>201805281424549_Migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

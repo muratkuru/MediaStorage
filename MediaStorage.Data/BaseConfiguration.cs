@@ -6,9 +6,6 @@ namespace MediaStorage.Data
     {
         internal BaseConfiguration()
         {
-            Property(m => m.IsRemoved)
-                .IsRequired()
-                .HasColumnAnnotation("DefaultValueSql", 0);
             Property(m => m.CreateDate)
                 .HasColumnAnnotation("DefaultValueSql", "GETDATE()");
         }

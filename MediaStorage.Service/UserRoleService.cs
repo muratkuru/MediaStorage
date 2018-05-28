@@ -11,7 +11,11 @@ namespace MediaStorage.Service
     {
         ICollection<UserRoleViewModel> GetAllUserRoles();
 
-        ICollection<CustomSelectListItem> GetAllUserRolesBySelectListItem(int? menuItemId);
+        ICollection<CustomSelectListItem> GetAllUserRolesByMenuItemId(int? menuItemId);
+
+        ICollection<CustomSelectListItem> GetAllUserRolesByUserId(string userId);
+
+        ICollection<UserRole> GetUserRolesByIds(int[] ids);
 
         UserRoleViewModel GetUserRoleById(int id);
 
@@ -41,7 +45,7 @@ namespace MediaStorage.Service
                 }).ToList();
         }
 
-        public ICollection<CustomSelectListItem> GetAllUserRolesBySelectListItem(int? menuItemId)
+        public ICollection<CustomSelectListItem> GetAllUserRolesByMenuItemId(int? menuItemId)
         {
             return userRoleRepository.GetAll()
                 .Select(s => new CustomSelectListItem
@@ -52,6 +56,34 @@ namespace MediaStorage.Service
                         ? s.MenuItems.Any(w => w.Id == menuItemId) 
                         : false
                 }).ToList();
+        }
+
+        public ICollection<CustomSelectListItem> GetAllUserRolesByUserId(string userId)
+        {
+            return userRoleRepository.GetAll()
+                .Select(s => new CustomSelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name,
+                    Selected = string.IsNullOrEmpty(userId)
+                        ? false
+                        : s.Users.Any(w => w.Id.ToString() == userId)
+                }).ToList();
+        }
+
+        public ICollection<UserRole> GetUserRolesByIds(int[] ids)
+        {
+            var userRoles = new List<UserRole>();
+            if(ids != null)
+                foreach(var item in ids)
+                {
+                    var userRole = userRoleRepository.Find(item);
+                    if (userRole != null)
+                        userRoles.Add(userRole);
+                }
+
+            return userRoles;
+
         }
 
         public UserRoleViewModel GetUserRoleById(int id)

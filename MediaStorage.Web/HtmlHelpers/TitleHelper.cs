@@ -2,7 +2,7 @@
 
 namespace MediaStorage.Web
 {
-    public static partial class CustomHelpers
+    public static class TitleHelper
     {
         public static string GetAddOrUpdateSubTitle(this HtmlHelper helper)
         {

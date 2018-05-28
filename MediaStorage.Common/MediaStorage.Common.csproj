@@ -50,6 +50,8 @@
     <Compile Include="ViewModels\UserRole\UserRoleViewModel.cs" />
     <Compile Include="ViewModels\User\LoginViewModel.cs" />
     <Compile Include="ViewModels\MaterialTypeViewModel.cs" />
+    <Compile Include="ViewModels\User\UserPostViewModel.cs" />
+    <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

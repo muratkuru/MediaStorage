@@ -81,7 +81,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
         {
             ViewBag.Menus = menuService.GetAllMenusBySelectListItem(id).ToMVCSelectListItem();
             ViewBag.ParentMenuItems = menuItemService.GetMenuItemsBySelectListItem(id).ToMVCSelectListItem();
-            ViewBag.UserRoles = userRoleService.GetAllUserRolesBySelectListItem(id).ToMVCSelectListItem();
+            ViewBag.UserRoles = userRoleService.GetAllUserRolesByMenuItemId(id).ToMVCSelectListItem();
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace MediaStorage.Web
 {
-    public static partial class CustomHelpers
+    public static class ResultHelper
     {
         public static IHtmlString ShowResult(this HtmlHelper helper)
         {

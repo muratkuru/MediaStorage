@@ -9,8 +9,8 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
     {
         private IUserRoleService userRoleService;
 
-        public UserRoleController(IUserRoleService userRoleService, IMenuService menuService)
-            : base(menuService)
+        public UserRoleController(IUserRoleService userRoleService, IMenuItemService menuItemService)
+            : base(menuItemService)
         {
             this.userRoleService = userRoleService;
         }
@@ -29,7 +29,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
                     var userRole = userRoleService.GetUserRoleById(outID);
                     if(userRole == null)
                     {
-                        TempData["result"] = new ServiceResult(false, "There is no UserRole record for this ID.");
+                        TempData["result"] = new ServiceResult(false, "There is no User Role record for this ID.");
                         return RedirectToAction("Index");
                     }
                     return View(userRole);
@@ -45,10 +45,10 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddOrUpdate(UserRoleViewModel model)
+        public ActionResult AddOrUpdate(UserRoleViewModel entity)
         {
             if (ModelState.IsValid)
-                TempData["result"] = userRoleService.AddOrUpdateUserRole(model);
+                TempData["result"] = userRoleService.AddOrUpdateUserRole(entity);
 
             return View();
         }

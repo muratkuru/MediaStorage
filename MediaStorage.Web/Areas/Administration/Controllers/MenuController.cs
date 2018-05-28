@@ -9,8 +9,8 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
     {
         private IMenuService menuService;
 
-        public MenuController(IMenuService menuService)
-            : base(menuService)
+        public MenuController(IMenuService menuService, IMenuItemService menuItemService)
+            : base(menuItemService)
         {
             this.menuService = menuService;
         }

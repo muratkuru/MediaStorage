@@ -6,8 +6,8 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
     [Authorize]
     public class DashboardController : BaseController
     {
-        public DashboardController(IMenuService pageService) 
-            : base(pageService)
+        public DashboardController(IMenuItemService menuItemService) 
+            : base(menuItemService)
         {
 
         }

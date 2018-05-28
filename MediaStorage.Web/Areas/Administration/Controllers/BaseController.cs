@@ -5,16 +5,16 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
 {
     public class BaseController : Controller
     {
-        private IMenuService menuService;
+        private IMenuItemService menuItemService;
 
-        public BaseController(IMenuService menuService)
+        public BaseController(IMenuItemService menuItemService)
         {
-            this.menuService = menuService;
+            this.menuItemService = menuItemService;
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            ViewBag.Menu = menuService.GetAllMenuItems();
+            ViewBag.Menu = menuItemService.GetAdministrationMenuItems();
 
             base.OnActionExecuting(filterContext);
         }

@@ -36,5 +36,8 @@ namespace MediaStorage.Common.ViewModels.Menu
         [Display(Name = "Menu")]
         [Required]
         public int MenuId { get; set; }
+
+        [Display(Name = "User Roles")]
+        public int[] UserRoleIds { get; set; }
     }
 }

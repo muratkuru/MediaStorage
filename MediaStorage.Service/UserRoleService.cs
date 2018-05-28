@@ -11,9 +11,11 @@ namespace MediaStorage.Service
     {
         ICollection<UserRoleViewModel> GetAllUserRoles();
 
+        ICollection<CustomSelectListItem> GetAllUserRolesBySelectListItem(int? menuItemId);
+
         UserRoleViewModel GetUserRoleById(int id);
 
-        ServiceResult AddOrUpdateUserRole(UserRoleViewModel model);
+        ServiceResult AddOrUpdateUserRole(UserRoleViewModel entity);
 
         ServiceResult RemoveUserRole(int id);
     }
@@ -31,11 +33,25 @@ namespace MediaStorage.Service
 
         public ICollection<UserRoleViewModel> GetAllUserRoles()
         {
-            return userRoleRepository.GetAll().Select(s => new UserRoleViewModel
-            {
-                Id = s.Id,
-                Name = s.Name
-            }).ToList();
+            return userRoleRepository.GetAll()
+                .Select(s => new UserRoleViewModel
+                {
+                    Id = s.Id,
+                    Name = s.Name
+                }).ToList();
+        }
+
+        public ICollection<CustomSelectListItem> GetAllUserRolesBySelectListItem(int? menuItemId)
+        {
+            return userRoleRepository.GetAll()
+                .Select(s => new CustomSelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name,
+                    Selected = menuItemId.HasValue 
+                        ? s.MenuItems.Any(w => w.Id == menuItemId) 
+                        : false
+                }).ToList();
         }
 
         public UserRoleViewModel GetUserRoleById(int id)
@@ -49,25 +65,25 @@ namespace MediaStorage.Service
         }
 
 
-        public ServiceResult AddOrUpdateUserRole(UserRoleViewModel model)
+        public ServiceResult AddOrUpdateUserRole(UserRoleViewModel entity)
         {
-            if (model.Id.HasValue)
+            if (entity.Id.HasValue)
             {
                 userRoleRepository.Update(new UserRole
                 {
-                    Id = model.Id.Value,
-                    Name = model.Name
+                    Id = entity.Id.Value,
+                    Name = entity.Name
                 });
             }
             else
             {
                 userRoleRepository.Add(new UserRole
                 {
-                    Name = model.Name
+                    Name = entity.Name
                 });
             }
 
-            string message = model.Id.HasValue
+            string message = entity.Id.HasValue
                 ? "The update process has "
                 : "The add process has ";
 

@@ -12,44 +12,48 @@ namespace MediaStorage.Service
     {
         ICollection<MenuViewModel> GetAllMenus();
 
+        ICollection<CustomSelectListItem> GetAllMenusBySelectListItem(int? id);
+
         MenuViewModel GetMenuById(int id);
 
         ServiceResult AddOrUpdateMenu(MenuViewModel model);
 
         ServiceResult RemoveMenu(int id);
-
-        ICollection<MenuItem> GetAllMenuItems();
-
-        ICollection<MenuItemListViewModel> GetMenuItemsByMenuId(int menuId);
-
-        MenuItemAddOrUpdateViewModel GetMenuItemsForAddOrUpdate(int? id);
-
-        ServiceResult AddOrUpdateMenuItem(MenuItemPostViewModel model);
-
-        ServiceResult RemoveMenuItem(int id);
     }
 
     public class MenuService : IMenuService
     {
         private IUnitOfWork uow;
         private IRepository<Menu> menuRepository;
-        private IRepository<MenuItem> menuItemRepository;
 
-        public MenuService(IUnitOfWork uow, IRepository<Menu> menuRepository, IRepository<MenuItem> menuItemRepository)
+        public MenuService(IUnitOfWork uow, IRepository<Menu> menuRepository)
         {
             this.uow = uow;
             this.menuRepository = menuRepository;
-            this.menuItemRepository = menuItemRepository;
         }
 
         public ICollection<MenuViewModel> GetAllMenus()
         {
-            return menuRepository.GetAll(w => !w.IsRemoved).Select(s => new MenuViewModel
-            {
-                Id = s.Id,
-                Name = s.Name,
-                Description = s.Description
-            }).ToList();
+            return menuRepository
+                .GetAll()
+                .Select(s => new MenuViewModel
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Description = s.Description
+                }).ToList();
+        }
+
+        public ICollection<CustomSelectListItem> GetAllMenusBySelectListItem(int? id)
+        {
+            return menuRepository
+                .GetAll()
+                .Select(s => new CustomSelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name,
+                    Selected = id.HasValue ? s.MenuItems.Any(a => a.Id == id.Value) : false
+                }).ToList();
         }
 
         public MenuViewModel GetMenuById(int id)
@@ -99,83 +103,6 @@ namespace MediaStorage.Service
             return uow.Commit() == 1
                 ? new ServiceResult(true, "The remove process has successful.")
                 : new ServiceResult(false, "The remove process has been unsuccessful.");
-        }
-
-        public ICollection<MenuItem> GetAllMenuItems()
-        {
-            return menuItemRepository
-                .GetAll(w => !w.IsRemoved && w.ParentMenuItemId == null, i => i.SubMenuItems)
-                .ToList();
-        }
-
-        public ICollection<MenuItemListViewModel> GetMenuItemsByMenuId(int menuId)
-        {
-            return menuItemRepository
-                    .GetAll(w => !w.IsRemoved, i => i.Menu, i => i.ParentMenuItem)
-                    .Where(w => w.MenuId == menuId)
-                    .Select(s => new MenuItemListViewModel
-                    {
-                        Id = s.Id,
-                        Title = s.Title,
-                        Action = s.Action,
-                        Controller = s.Controller,
-                        Area = s.Area,
-                        Icon = s.Icon,
-                        RowIndex = s.RowIndex,
-                        Menu = s.Menu.Name,
-                        ParentMenuItem = s.ParentMenuItem.Title
-                    }).ToList();
-        }
-
-        public MenuItemAddOrUpdateViewModel GetMenuItemsForAddOrUpdate(int? id)
-        {
-            var menus = menuRepository
-                .GetAll(w => !w.IsRemoved)
-                .Select(s => new SelectListViewModel
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Name
-                }).ToList();
-            var parentMenuItems = menuItemRepository
-                .GetAll(w => !w.IsRemoved)
-                .Select(s => new SelectListViewModel
-                {
-                    Value = s.Id.ToString(),
-                    Text = $"{s.Area}/{s.Controller}/{s.Action}"
-                }).ToList();
-
-            if (id.HasValue)
-            {
-                var menuItem = menuItemRepository.Find(id.Value);
-                return menuItem == null ? null : new MenuItemAddOrUpdateViewModel
-                {
-                    Id = menuItem.Id,
-                    Title = menuItem.Title,
-                    Action = menuItem.Action,
-                    Controller = menuItem.Controller,
-                    Area = menuItem.Area,
-                    Icon = menuItem.Icon,
-                    RowIndex = menuItem.RowIndex,
-                    Menus = menus,
-                    ParentMenuItems = parentMenuItems
-                };
-            }
-
-            return new MenuItemAddOrUpdateViewModel
-            {
-                Menus = menus,
-                ParentMenuItems = parentMenuItems
-            };
-        }
-
-        public ServiceResult AddOrUpdateMenuItem(MenuItemPostViewModel model)
-        {
-            return null;
-        }
-
-        public ServiceResult RemoveMenuItem(int id)
-        {
-            return null;
         }
     }
 }

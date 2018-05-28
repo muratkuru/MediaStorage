@@ -1,1 +1,57 @@
-﻿
+﻿@model MediaStorage.Common.ViewModels.Menu.MenuItemPostViewModel
+
+@{ 
+    ViewBag.Title = "Menu Item";
+}
+
+<div class="col-md-12">
+    <h1>@ViewBag.Title <small>@Html.GetAddOrUpdateSubTitle()</small></h1>
+    <div class="col-md-12">
+        <form class="add-or-update-form" action="@Url.Action("AddOrUpdate")" method="post">
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(m => m.Id)
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.MenuId)</label>
+                @Html.DropDownListFor(m => m.MenuId, (IEnumerable<SelectListItem>)ViewBag.Menus, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Title)</label>
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Title) })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Action)</label>
+                @Html.TextBoxFor(m => m.Action, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Action) })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Controller)</label>
+                @Html.TextBoxFor(m => m.Controller, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Controller) })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Area)</label>
+                @Html.TextBoxFor(m => m.Area, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Area) })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Icon)</label>
+                @Html.TextBoxFor(m => m.Icon, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Icon) })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.RowIndex)</label>
+                @Html.TextBoxFor(m => m.RowIndex, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.RowIndex) })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.ParentMenuItemId)</label>
+                @Html.DropDownListFor(m => m.ParentMenuItemId, (IEnumerable<SelectListItem>)ViewBag.ParentMenuItems, "Main menu item", new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.UserRoleIds)</label>
+                @Html.ListBoxFor(m => m.UserRoleIds, (IEnumerable<SelectListItem>)ViewBag.UserRoles, new { @class = "form-control" })
+            </div>
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-save"></i> Save
+            </button>
+            @Html.ShowResult()
+            @Html.ValidationSummary("", new { @class = "alert alert-danger custom-alert" })
+        </form>
+    </div>
+</div>

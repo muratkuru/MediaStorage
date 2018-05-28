@@ -29,13 +29,13 @@ namespace MediaStorage.Service
     {
         private IUnitOfWork uow;
         private IRepository<MenuItem> menuItemRepository;
-        private IRepository<UserRole> userRoleRepository;
+        private IUserRoleService userRoleService;
 
-        public MenuItemService(IUnitOfWork uow, IRepository<MenuItem> menuItemRepository, IRepository<UserRole> userRoleRepository)
+        public MenuItemService(IUnitOfWork uow, IRepository<MenuItem> menuItemRepository, IUserRoleService userRoleService)
         {
             this.uow = uow;
             this.menuItemRepository = menuItemRepository;
-            this.userRoleRepository = userRoleRepository;
+            this.userRoleService = userRoleService;
         }
 
         public ICollection<MenuItemListViewModel> GetAllMenuItems()
@@ -117,14 +117,7 @@ namespace MediaStorage.Service
 
         public ServiceResult AddOrUpdateMenuItem(MenuItemPostViewModel entity)
         {
-            var userRoles = new List<UserRole>();
-            if (entity.UserRoleIds != null)
-                foreach (var item in entity.UserRoleIds)
-                {
-                    var userRole = userRoleRepository.Find(item);
-                    if(userRole != null)
-                        userRoles.Add(userRole);
-                }
+            var userRoles = userRoleService.GetUserRolesByIds(entity.UserRoleIds);
 
             if (entity.Id.HasValue)
             {
@@ -170,7 +163,8 @@ namespace MediaStorage.Service
         public ServiceResult RemoveMenuItem(int id)
         {
             var menuItem = menuItemRepository.Get(w => w.Id == id, i => i.UserRoles);
-            menuItemRepository.Delete(menuItem);
+            if(menuItem != null)
+                menuItemRepository.Delete(menuItem);
 
             return uow.Commit() > 0
                 ? new ServiceResult(true, "The remove process has successful.")

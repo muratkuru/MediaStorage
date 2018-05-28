@@ -9,9 +9,9 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
 {
     public class AccountController : Controller
     {
-        private IAdministratorService administratorService;
+        private IUserService administratorService;
 
-        public AccountController(IAdministratorService administratorService)
+        public AccountController(IUserService administratorService)
         {
             this.administratorService = administratorService;
         }

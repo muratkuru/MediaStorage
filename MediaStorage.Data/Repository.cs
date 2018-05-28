@@ -131,16 +131,8 @@ namespace MediaStorage.Data
         }
 
         public T Get(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
-        {
-            var query = dbSet.AsQueryable();
-
-            if (includes != null)
-            {
-                foreach (var item in includes)
-                    query = query.Include(item);
-            }
-            
-            return query.FirstOrDefault(predicate);
+        {   
+            return GetAll(includes).FirstOrDefault(predicate);
         }
 
         public IQueryable<T> GetAll()

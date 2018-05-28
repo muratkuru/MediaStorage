@@ -14,7 +14,7 @@ namespace MediaStorage.Service
 
         ICollection<CustomSelectListItem> GetMenuItemsBySelectListItem(int? id);
 
-        ICollection<MenuItemPostViewModel> GetAdministrationMenuItems();
+        ICollection<MenuItem> GetAdministrationMenuItems();
 
         ICollection<MenuItemListViewModel> GetMenuItemsByFilter(int? menuId);
 
@@ -70,19 +70,11 @@ namespace MediaStorage.Service
                 }).ToList();
         }
 
-        public ICollection<MenuItemPostViewModel> GetAdministrationMenuItems()
+        // TODO: Refactoring
+        public ICollection<MenuItem> GetAdministrationMenuItems()
         {
             return menuItemRepository
-                .GetAll(w => w.ParentMenuItem == null, i => i.SubMenuItems)
-                .Select(s => new MenuItemPostViewModel
-                {
-                    Id = s.Id,
-                    Title = s.Title,
-                    Action = s.Action,
-                    Controller = s.Controller,
-                    Area = s.Area,
-                    Icon = s.Icon
-                }).ToList();
+                .GetAll(w => w.ParentMenuItem == null, i => i.SubMenuItems).ToList();
         }
 
         public ICollection<MenuItemListViewModel> GetMenuItemsByFilter(int? menuId)

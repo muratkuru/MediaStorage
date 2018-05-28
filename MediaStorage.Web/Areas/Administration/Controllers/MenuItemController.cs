@@ -11,9 +11,9 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
 {
     public class MenuItemController : BaseController
     {
-        IMenuItemService menuItemService;
-        IMenuService menuService;
-        IUserRoleService userRoleService;
+        private IMenuItemService menuItemService;
+        private IMenuService menuService;
+        private IUserRoleService userRoleService;
 
         public MenuItemController(IMenuItemService menuItemService, IMenuService menuService, IUserRoleService userRoleService) 
             : base(menuItemService)

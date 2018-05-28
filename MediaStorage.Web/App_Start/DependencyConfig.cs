@@ -21,7 +21,7 @@ namespace MediaStorage.Web.App_Start
 
             builder.RegisterType<MenuService>().As<IMenuService>();
             builder.RegisterType<MaterialTypeService>().As<IMaterialTypeService>();
-            builder.RegisterType<UserService>().As<IAdministratorService>();
+            builder.RegisterType<UserService>().As<IUserService>();
             builder.RegisterType<UserRoleService>().As<IUserRoleService>();
             builder.RegisterType<MenuItemService>().As<IMenuItemService>();
 

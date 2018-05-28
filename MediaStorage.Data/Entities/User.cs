@@ -41,8 +41,8 @@ namespace MediaStorage.Data.Entities
                 .WithMany(m => m.Users)
                 .Map(m =>
                 {
-                    m.MapRightKey("UserId");
-                    m.MapLeftKey("UserRoleId");
+                    m.MapRightKey("UserRoleId");
+                    m.MapLeftKey("UserId");
                 });
         }
     }

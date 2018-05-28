@@ -7,6 +7,49 @@ using System.Threading.Tasks;
 
 namespace MediaStorage.Data
 {
+    public interface IRepository<T> where T : BaseEntity
+    {
+        IQueryable<T> GetAll();
+
+        IQueryable<T> GetAll(params Expression<Func<T, object>>[] includes);
+
+        IQueryable<T> GetAll(Expression<Func<T, bool>> predicate);
+
+        IQueryable<T> GetAll(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
+
+        T Get(Expression<Func<T, bool>> predicate);
+
+        T Get(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
+
+        Task<T> GetAsync(Expression<Func<T, bool>> predicate);
+
+        T Find(object key);
+
+        Task<T> FindAsync(object key);
+
+        void Add(T entity);
+
+        void AddRange(ICollection<T> entities);
+
+        void Update(T entity);
+
+        void Delete(T entity);
+
+        void Delete(object id);
+
+        void DeleteRange(ICollection<T> entities);
+
+        void DeleteAll(Expression<Func<T, bool>> predicate);
+
+        int Count();
+
+        int Count(Expression<Func<T, bool>> predicate);
+
+        Task<int> CountAsync();
+
+        Task<int> CountAsync(Expression<Func<T, bool>> predicate);
+    }
+
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly MediaContext context;
@@ -85,6 +128,19 @@ namespace MediaStorage.Data
         public T Get(Expression<Func<T, bool>> predicate)
         {
             return dbSet.FirstOrDefault(predicate);
+        }
+
+        public T Get(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
+        {
+            var query = dbSet.AsQueryable();
+
+            if (includes != null)
+            {
+                foreach (var item in includes)
+                    query = query.Include(item);
+            }
+            
+            return query.FirstOrDefault(predicate);
         }
 
         public IQueryable<T> GetAll()

@@ -76,9 +76,7 @@ namespace MediaStorage.Service
                 Description = entity.Description
             });
 
-            return uow.Commit() == 1
-                ? new ServiceResult(true, "The add process has successful.")
-                : new ServiceResult(false, "The add process has been unsuccessful.");
+            return ServiceResult.GetAddResult(uow.Commit() == 1);
         }
 
         public ServiceResult UpdateMenu(MenuViewModel entity)
@@ -90,18 +88,14 @@ namespace MediaStorage.Service
                 Description = entity.Description
             });
 
-            return uow.Commit() == 1
-                ? new ServiceResult(true, "The update process has successful.")
-                : new ServiceResult(false, "The update process has been unsuccessful.");
+            return ServiceResult.GetUpdateResult(uow.Commit() == 1);
         }
 
         public ServiceResult RemoveMenu(int id)
         {
             menuRepository.Delete(id);
 
-            return uow.Commit() == 1
-                ? new ServiceResult(true, "The remove process has successful.")
-                : new ServiceResult(false, "The remove process has been unsuccessful.");
+            return ServiceResult.GetRemoveResult(uow.Commit() > 1);
         }
     }
 }

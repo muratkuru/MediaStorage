@@ -25,5 +25,23 @@
             IsSuccessful = false;
             Message = message;
         }
+
+        public static ServiceResult GetAddResult(bool success)
+        {
+            string message = $"The add process has { (success ? "successful" : "been unsuccessful") }.";
+            return new ServiceResult(success, message);
+        }
+
+        public static ServiceResult GetUpdateResult(bool success)
+        {
+            string message = $"The update process has { (success ? "successful" : "been unsuccessful") }.";
+            return new ServiceResult(success, message);
+        }
+
+        public static ServiceResult GetRemoveResult(bool success)
+        {
+            string message = $"The remove process has { (success ? "successful" : "been unsuccessful") }.";
+            return new ServiceResult(success, message);
+        }
     }
 }

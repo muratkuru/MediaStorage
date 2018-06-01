@@ -91,9 +91,7 @@ namespace MediaStorage.Service
                 IsActive = entity.IsActive
             });
 
-            return uow.Commit() > 0
-                ? new ServiceResult(true, "The add process has successful.")
-                : new ServiceResult(false, "The add process has been unsuccessful.");
+            return ServiceResult.GetAddResult(uow.Commit() > 0);
         }
 
         public ServiceResult UpdateUser(UserPostViewModel entity)
@@ -118,9 +116,7 @@ namespace MediaStorage.Service
 
             userRepository.Update(user);
 
-            return uow.Commit() > 0
-                ? new ServiceResult(true, "The update process has successful.")
-                : new ServiceResult(false, "The update process has been unsuccessful.");
+            return ServiceResult.GetUpdateResult(uow.Commit() > 0);
         }
 
         public ServiceResult RemoveUser(Guid id)
@@ -129,11 +125,10 @@ namespace MediaStorage.Service
             if (user != null)
                 userRepository.Delete(user);
 
-            return uow.Commit() > 0
-                ? new ServiceResult(true, "The remove process has successful.")
-                : new ServiceResult(false, "The remove process has been unsuccessful.");
+            return ServiceResult.GetRemoveResult(uow.Commit() > 0);
         }
 
+        // TODO: Refactoring
         private string CreateRandomPassword()
         {
             string charachters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789*!+-_.";

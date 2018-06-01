@@ -2,7 +2,6 @@
 using MediaStorage.Common.ViewModels.Menu;
 using MediaStorage.Data;
 using MediaStorage.Data.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -85,21 +84,22 @@ namespace MediaStorage.Service
         {
             var menuItems = menuItemRepository
                     .GetAll(i => i.Menu, i => i.ParentMenuItem);
+
             if (menuId.HasValue)
                 menuItems = menuItems.Where(w => w.MenuId == menuId);
 
             return menuItems.Select(s => new MenuItemListViewModel
-                    {
-                        Id = s.Id,
-                        Title = s.Title,
-                        Action = s.Action,
-                        Controller = s.Controller,
-                        Area = s.Area,
-                        Icon = s.Icon,
-                        RowIndex = s.RowIndex,
-                        Menu = s.Menu.Name,
-                        ParentMenuItem = s.ParentMenuItem.Title
-                    }).ToList();
+            {
+                Id = s.Id,
+                Title = s.Title,
+                Action = s.Action,
+                Controller = s.Controller,
+                Area = s.Area,
+                Icon = s.Icon,
+                RowIndex = s.RowIndex,
+                Menu = s.Menu.Name,
+                ParentMenuItem = s.ParentMenuItem.Title
+            }).ToList();
         }
 
         public MenuItemPostViewModel GetMenuItemById(int id)
@@ -134,9 +134,7 @@ namespace MediaStorage.Service
                 UserRoles = userRoles
             });
 
-            return uow.Commit() > 0
-                ? new ServiceResult(true, "The add process has successful.")
-                : new ServiceResult(false, "The add process has been unsuccessful.");
+            return ServiceResult.GetAddResult(uow.Commit() > 0);
         }
 
         public ServiceResult UpdateMenuItem(MenuItemPostViewModel entity)
@@ -157,20 +155,16 @@ namespace MediaStorage.Service
 
             menuItemRepository.Update(menuItem);
 
-            return uow.Commit() > 0
-                ? new ServiceResult(true, "The update process has successful.")
-                : new ServiceResult(false, "The update process has been unsuccessful.");
+            return ServiceResult.GetUpdateResult(uow.Commit() > 0);
         }
 
         public ServiceResult RemoveMenuItem(int id)
         {
             var menuItem = menuItemRepository.Get(w => w.Id == id, i => i.UserRoles);
-            if(menuItem != null)
+            if (menuItem != null)
                 menuItemRepository.Delete(menuItem);
 
-            return uow.Commit() > 0
-                ? new ServiceResult(true, "The remove process has successful.")
-                : new ServiceResult(false, "The remove process has been unsuccessful.");
+            return ServiceResult.GetRemoveResult(uow.Commit() > 0);
         }
     }
 }

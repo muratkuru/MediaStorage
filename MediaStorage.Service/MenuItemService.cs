@@ -20,7 +20,9 @@ namespace MediaStorage.Service
 
         MenuItemPostViewModel GetMenuItemById(int id);
 
-        ServiceResult AddOrUpdateMenuItem(MenuItemPostViewModel entity);
+        ServiceResult AddMenuItem(MenuItemPostViewModel entity);
+
+        ServiceResult UpdateMenuItem(MenuItemPostViewModel entity);
 
         ServiceResult RemoveMenuItem(int id);
     }
@@ -115,49 +117,49 @@ namespace MediaStorage.Service
             };
         }
 
-        public ServiceResult AddOrUpdateMenuItem(MenuItemPostViewModel entity)
+        public ServiceResult AddMenuItem(MenuItemPostViewModel entity)
         {
             var userRoles = userRoleService.GetUserRolesByIds(entity.UserRoleIds);
 
-            if (entity.Id.HasValue)
+            menuItemRepository.Add(new MenuItem
             {
-                var menuItem = menuItemRepository.Get(w => w.Id == entity.Id.Value, i => i.UserRoles);
-
-                menuItem.Title = entity.Title;
-                menuItem.Action = entity.Action;
-                menuItem.Controller = entity.Controller;
-                menuItem.Area = entity.Area;
-                menuItem.Icon = entity.Icon;
-                menuItem.RowIndex = entity.RowIndex;
-                menuItem.ParentMenuItemId = entity.ParentMenuItemId;
-                menuItem.MenuId = entity.MenuId;
-                menuItem.UserRoles = userRoles;
-
-                menuItemRepository.Update(menuItem);
-            }
-            else
-            {
-                menuItemRepository.Add(new MenuItem
-                {
-                    Title = entity.Title,
-                    Action = entity.Action,
-                    Controller = entity.Controller,
-                    Area = entity.Area,
-                    Icon = entity.Icon,
-                    RowIndex = entity.RowIndex,
-                    ParentMenuItemId = entity.ParentMenuItemId,
-                    MenuId = entity.MenuId,
-                    UserRoles = userRoles
-                });
-            }
-
-            string message = entity.Id.HasValue
-                ? "The update process has "
-                : "The add process has ";
+                Title = entity.Title,
+                Action = entity.Action,
+                Controller = entity.Controller,
+                Area = entity.Area,
+                Icon = entity.Icon,
+                RowIndex = entity.RowIndex,
+                ParentMenuItemId = entity.ParentMenuItemId,
+                MenuId = entity.MenuId,
+                UserRoles = userRoles
+            });
 
             return uow.Commit() > 0
-                ? new ServiceResult(true, message + "successful.")
-                : new ServiceResult(false, message + "been unsuccessful.");
+                ? new ServiceResult(true, "The add process has successful.")
+                : new ServiceResult(false, "The add process has been unsuccessful.");
+        }
+
+        public ServiceResult UpdateMenuItem(MenuItemPostViewModel entity)
+        {
+            var userRoles = userRoleService.GetUserRolesByIds(entity.UserRoleIds);
+
+            var menuItem = menuItemRepository.Get(w => w.Id == entity.Id.Value, i => i.UserRoles);
+
+            menuItem.Title = entity.Title;
+            menuItem.Action = entity.Action;
+            menuItem.Controller = entity.Controller;
+            menuItem.Area = entity.Area;
+            menuItem.Icon = entity.Icon;
+            menuItem.RowIndex = entity.RowIndex;
+            menuItem.ParentMenuItemId = entity.ParentMenuItemId;
+            menuItem.MenuId = entity.MenuId;
+            menuItem.UserRoles = userRoles;
+
+            menuItemRepository.Update(menuItem);
+
+            return uow.Commit() > 0
+                ? new ServiceResult(true, "The update process has successful.")
+                : new ServiceResult(false, "The update process has been unsuccessful.");
         }
 
         public ServiceResult RemoveMenuItem(int id)

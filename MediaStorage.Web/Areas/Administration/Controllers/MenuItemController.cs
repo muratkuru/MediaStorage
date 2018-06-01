@@ -63,7 +63,12 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             SetAddOrUpdateViewBags(entity.Id);
 
             if (ModelState.IsValid)
-                TempData["result"] = menuItemService.AddOrUpdateMenuItem(entity);
+            {
+                if(entity.Id.HasValue)
+                    TempData["result"] = menuItemService.UpdateMenuItem(entity);
+                else
+                    TempData["result"] = menuItemService.AddMenuItem(entity);
+            }
 
             return View();
         }

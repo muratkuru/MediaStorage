@@ -16,7 +16,9 @@ namespace MediaStorage.Service
 
         ServiceResult Login(LoginViewModel model);
 
-        ServiceResult AddOrUpdateUser(UserPostViewModel entity);
+        ServiceResult AddUser(UserPostViewModel entity);
+
+        ServiceResult UpdateUser(UserPostViewModel entity);
 
         ServiceResult RemoveUser(Guid id);
     }
@@ -69,54 +71,56 @@ namespace MediaStorage.Service
             return result;
         }
 
-        public ServiceResult AddOrUpdateUser(UserPostViewModel entity)
+        public ServiceResult AddUser(UserPostViewModel entity)
         {
             var userRoles = userRoleService.GetUserRolesByIds(entity.UserRoleIds);
             // TODO: send mail
             var password = CreateRandomPassword();
 
-            if(string.IsNullOrEmpty(entity.Id))
+            if (userRepository.Get(w => w.Username == entity.Username) != null)
+                return new ServiceResult(false, "Username already exist.");
+            if (userRepository.Get(w => w.Mail == entity.Mail) != null)
+                return new ServiceResult(false, "Mail already exist.");
+
+            userRepository.Add(new User
             {
+                Username = entity.Username,
+                Mail = entity.Mail,
+                UserRoles = userRoles,
+                Password = password,
+                IsActive = entity.IsActive
+            });
+
+            return uow.Commit() > 0
+                ? new ServiceResult(true, "The add process has successful.")
+                : new ServiceResult(false, "The add process has been unsuccessful.");
+        }
+
+        public ServiceResult UpdateUser(UserPostViewModel entity)
+        {
+            var userRoles = userRoleService.GetUserRolesByIds(entity.UserRoleIds);
+            // TODO: send mail
+            var password = CreateRandomPassword();
+
+            var user = userRepository.Get(w => w.Id.ToString() == entity.Id, i => i.UserRoles);
+
+            if (user.Username != entity.Username)
                 if (userRepository.Get(w => w.Username == entity.Username) != null)
                     return new ServiceResult(false, "Username already exist.");
+            if (user.Mail != entity.Mail)
                 if (userRepository.Get(w => w.Mail == entity.Mail) != null)
                     return new ServiceResult(false, "Mail already exist.");
 
-                userRepository.Add(new User
-                {
-                    Username = entity.Username,
-                    Mail = entity.Mail,
-                    UserRoles = userRoles,
-                    Password = password,
-                    IsActive = entity.IsActive
-                });
-            }
-            else
-            {
-                var user = userRepository.Get(w => w.Id.ToString() == entity.Id, i => i.UserRoles);
+            user.Username = entity.Username;
+            user.Mail = entity.Mail;
+            user.UserRoles = userRoles;
+            user.IsActive = entity.IsActive;
 
-                if(user.Username != entity.Username)
-                    if (userRepository.Get(w => w.Username == entity.Username) != null)
-                        return new ServiceResult(false, "Username already exist.");
-                if(user.Mail != entity.Mail)
-                    if (userRepository.Get(w => w.Mail == entity.Mail) != null)
-                        return new ServiceResult(false, "Mail already exist.");
-
-                user.Username = entity.Username;
-                user.Mail = entity.Mail;
-                user.UserRoles = userRoles;
-                user.IsActive = entity.IsActive;
-
-                userRepository.Update(user);
-            }
-
-            string message = string.IsNullOrEmpty(entity.Id)
-                ? "The add process has "
-                : "The update process has ";
+            userRepository.Update(user);
 
             return uow.Commit() > 0
-                ? new ServiceResult(true, message + "successful.")
-                : new ServiceResult(false, message + "been unsuccessful.");
+                ? new ServiceResult(true, "The update process has successful.")
+                : new ServiceResult(false, "The update process has been unsuccessful.");
         }
 
         public ServiceResult RemoveUser(Guid id)

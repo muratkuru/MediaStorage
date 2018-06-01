@@ -2,9 +2,6 @@
 using MediaStorage.Common.ViewModels.User;
 using MediaStorage.Service;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MediaStorage.Web.Areas.Administration.Controllers
@@ -59,7 +56,12 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             ViewBag.UserRoles = userRoleService.GetAllUserRolesByUserId(entity.Id).ToMVCSelectListItem();
 
             if (ModelState.IsValid)
-                TempData["result"] = userService.AddOrUpdateUser(entity);
+            {
+                if(string.IsNullOrEmpty(entity.Id))
+                    TempData["result"] = userService.AddUser(entity);
+                else
+                    TempData["result"] = userService.UpdateUser(entity);
+            }
 
             return View();
         }

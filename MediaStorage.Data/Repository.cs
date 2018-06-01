@@ -105,9 +105,9 @@ namespace MediaStorage.Data
 
         public void DeleteAll(Expression<Func<T, bool>> predicate)
         {
-            dbSet.RemoveRange(
-                GetAll(predicate)
-            );
+            var entities = GetAll(predicate).ToList();
+            if(entities.Count > 0)
+                dbSet.RemoveRange(entities);
         }
 
         public void DeleteRange(ICollection<T> entities)

@@ -1,5 +1,4 @@
 ﻿using MediaStorage.Common;
-using MediaStorage.Common.ViewModels;
 using MediaStorage.Common.ViewModels.Menu;
 using MediaStorage.Data;
 using MediaStorage.Data.Entities;
@@ -16,7 +15,9 @@ namespace MediaStorage.Service
 
         MenuViewModel GetMenuById(int id);
 
-        ServiceResult AddOrUpdateMenu(MenuViewModel model);
+        ServiceResult AddMenu(MenuViewModel entity);
+
+        ServiceResult UpdateMenu(MenuViewModel entity);
 
         ServiceResult RemoveMenu(int id);
     }
@@ -67,33 +68,31 @@ namespace MediaStorage.Service
             };
         }
 
-        public ServiceResult AddOrUpdateMenu(MenuViewModel model)
+        public ServiceResult AddMenu(MenuViewModel entity)
         {
-            if (model.Id.HasValue)
+            menuRepository.Add(new Menu
             {
-                menuRepository.Update(new Menu
-                {
-                    Id = model.Id.Value,
-                    Name = model.Name,
-                    Description = model.Description
-                });
-            }
-            else
-            {
-                menuRepository.Add(new Menu
-                {
-                    Name = model.Name,
-                    Description = model.Description
-                });
-            }
-
-            string message = model.Id.HasValue
-                ? "The update process has "
-                : "The add process has ";
+                Name = entity.Name,
+                Description = entity.Description
+            });
 
             return uow.Commit() == 1
-                ? new ServiceResult(true, message + "successful.")
-                : new ServiceResult(false, message + "been unsuccessful.");
+                ? new ServiceResult(true, "The add process has successful.")
+                : new ServiceResult(false, "The add process has been unsuccessful.");
+        }
+
+        public ServiceResult UpdateMenu(MenuViewModel entity)
+        {
+            menuRepository.Update(new Menu
+            {
+                Id = entity.Id.Value,
+                Name = entity.Name,
+                Description = entity.Description
+            });
+
+            return uow.Commit() == 1
+                ? new ServiceResult(true, "The update process has successful.")
+                : new ServiceResult(false, "The update process has been unsuccessful.");
         }
 
         public ServiceResult RemoveMenu(int id)

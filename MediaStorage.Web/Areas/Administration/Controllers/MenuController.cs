@@ -22,7 +22,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
 
         public ActionResult AddOrUpdate(string id)
         {
-            if(!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrEmpty(id))
             {
                 if (int.TryParse(id, out int outID))
                 {
@@ -45,10 +45,15 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddOrUpdate(MenuViewModel model)
+        public ActionResult AddOrUpdate(MenuViewModel entity)
         {
-            if(ModelState.IsValid)
-                TempData["result"] = menuService.AddOrUpdateMenu(model);
+            if (ModelState.IsValid)
+            {
+                if (entity.Id.HasValue)
+                    TempData["result"] = menuService.UpdateMenu(entity);
+                else
+                    TempData["result"] = menuService.AddMenu(entity);
+            }
 
             return View();
         }

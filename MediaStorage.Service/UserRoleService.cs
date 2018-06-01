@@ -19,7 +19,9 @@ namespace MediaStorage.Service
 
         UserRoleViewModel GetUserRoleById(int id);
 
-        ServiceResult AddOrUpdateUserRole(UserRoleViewModel entity);
+        ServiceResult AddUserRole(UserRoleViewModel entity);
+
+        ServiceResult UpdateUserRole(UserRoleViewModel entity);
 
         ServiceResult RemoveUserRole(int id);
     }
@@ -96,32 +98,29 @@ namespace MediaStorage.Service
             };
         }
 
-
-        public ServiceResult AddOrUpdateUserRole(UserRoleViewModel entity)
+        public ServiceResult AddUserRole(UserRoleViewModel entity)
         {
-            if (entity.Id.HasValue)
+            userRoleRepository.Add(new UserRole
             {
-                userRoleRepository.Update(new UserRole
-                {
-                    Id = entity.Id.Value,
-                    Name = entity.Name
-                });
-            }
-            else
-            {
-                userRoleRepository.Add(new UserRole
-                {
-                    Name = entity.Name
-                });
-            }
-
-            string message = entity.Id.HasValue
-                ? "The update process has "
-                : "The add process has ";
+                Name = entity.Name
+            });
 
             return uow.Commit() == 1
-                ? new ServiceResult(true, message + "successful.")
-                : new ServiceResult(false, message + "been unsuccessful.");
+                ? new ServiceResult(true, "The add process has successful.")
+                : new ServiceResult(false, "The add process has been unsuccessful.");
+        }
+
+        public ServiceResult UpdateUserRole(UserRoleViewModel entity)
+        {
+            userRoleRepository.Update(new UserRole
+            {
+                Id = entity.Id.Value,
+                Name = entity.Name
+            });
+
+            return uow.Commit() == 1
+                ? new ServiceResult(true, "The update process has successful.")
+                : new ServiceResult(false, "The update process has been unsuccessful.");
         }
 
         public ServiceResult RemoveUserRole(int id)

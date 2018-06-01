@@ -48,7 +48,12 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
         public ActionResult AddOrUpdate(UserRoleViewModel entity)
         {
             if (ModelState.IsValid)
-                TempData["result"] = userRoleService.AddOrUpdateUserRole(entity);
+            {
+                if(entity.Id.HasValue)
+                    TempData["result"] = userRoleService.UpdateUserRole(entity);
+                else
+                    TempData["result"] = userRoleService.AddUserRole(entity);
+            }
 
             return View();
         }

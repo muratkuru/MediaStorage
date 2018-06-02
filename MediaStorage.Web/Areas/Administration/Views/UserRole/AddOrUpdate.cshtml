@@ -11,7 +11,10 @@
             @Html.AntiForgeryToken()
 
             @Html.HiddenFor(m => m.Id)
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Name) })
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Name)</label>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Name) })
+            </div>
             <button type="submit" class="btn btn-success">
                 <i class="fa fa-save"></i> Save
             </button>

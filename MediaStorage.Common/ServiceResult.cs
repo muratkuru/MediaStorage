@@ -10,7 +10,19 @@
             Message = message;
         }
 
+        public ServiceResult(bool isSuccessful, string message, bool isConfirm, string action)
+        {
+            IsSuccessful = isSuccessful;
+            Message = message;
+            IsConfirm = isConfirm;
+            Action = action;
+        }
+
         public bool IsSuccessful { get; set; }
+
+        public bool IsConfirm { get; set; }
+
+        public string Action { get; set; }
 
         public string Message { get; set; }
 

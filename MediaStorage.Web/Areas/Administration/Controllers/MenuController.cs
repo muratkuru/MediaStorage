@@ -8,11 +8,13 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
     public class MenuController : BaseController
     {
         private IMenuService menuService;
+        private IMenuItemService menuItemService;
 
         public MenuController(IMenuService menuService, IMenuItemService menuItemService)
             : base(menuItemService)
         {
             this.menuService = menuService;
+            this.menuItemService = menuItemService;
         }
 
         public ActionResult Index()
@@ -58,10 +60,21 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View();
         }
 
-        public ActionResult Remove(string id)
+        public ActionResult Remove(string id, bool cascadeRemove = false)
         {
             if (int.TryParse(id, out int outID))
-                TempData["result"] = menuService.RemoveMenu(outID);
+            {
+                var menuItems = menuItemService.GetMenuItemsByFilter(outID);
+
+                if (menuItems.Count > 0 && !cascadeRemove)
+                    TempData["result"] = new ServiceResult(false, 
+                        "Attention! This element will deleted with child elements.", 
+                        true, 
+                        Url.Action("Remove", new { cascadeRemove = true })
+                    );
+                else
+                    TempData["result"] = menuService.RemoveMenu(outID, cascadeRemove);
+            }
             else
                 TempData["result"] = new ServiceResult(false, "Invalid ID.");
             return RedirectToAction("Index");

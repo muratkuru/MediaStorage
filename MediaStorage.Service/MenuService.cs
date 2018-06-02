@@ -19,18 +19,20 @@ namespace MediaStorage.Service
 
         ServiceResult UpdateMenu(MenuViewModel entity);
 
-        ServiceResult RemoveMenu(int id);
+        ServiceResult RemoveMenu(int id, bool cascadeRemove = false);
     }
 
     public class MenuService : IMenuService
     {
         private IUnitOfWork uow;
         private IRepository<Menu> menuRepository;
+        private IRepository<MenuItem> menuItemRepository;
 
-        public MenuService(IUnitOfWork uow, IRepository<Menu> menuRepository)
+        public MenuService(IUnitOfWork uow, IRepository<Menu> menuRepository, IRepository<MenuItem> menuItemRepository)
         {
             this.uow = uow;
             this.menuRepository = menuRepository;
+            this.menuItemRepository = menuItemRepository;
         }
 
         public ICollection<MenuViewModel> GetAllMenus()
@@ -91,11 +93,16 @@ namespace MediaStorage.Service
             return ServiceResult.GetUpdateResult(uow.Commit() == 1);
         }
 
-        public ServiceResult RemoveMenu(int id)
+        public ServiceResult RemoveMenu(int id, bool cascadeRemove = false)
         {
+            if(cascadeRemove)
+            {
+                var menuItems = menuItemRepository.GetAll(w => w.MenuId == id, i => i.UserRoles).ToList();
+                if (menuItems.Count > 0)
+                    menuItemRepository.DeleteRange(menuItems);
+            }
             menuRepository.Delete(id);
-
-            return ServiceResult.GetRemoveResult(uow.Commit() > 1);
+            return ServiceResult.GetRemoveResult(uow.Commit() > 0);
         }
     }
 }

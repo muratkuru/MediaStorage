@@ -62,11 +62,11 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View();
         }
 
+        // TODO: Cascade remove
         public ActionResult Remove(string id, bool cascadeRemove = false)
         {
             if (int.TryParse(id, out int outID))
             {
-                // TODO: Cascade remove
                 TempData["result"] = materialTypeService.RemoveMaterialType(outID, cascadeRemove);
             }
             else

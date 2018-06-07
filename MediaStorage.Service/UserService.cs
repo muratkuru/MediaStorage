@@ -74,7 +74,7 @@ namespace MediaStorage.Service
         public ServiceResult AddUser(UserPostViewModel entity)
         {
             var userRoles = userRoleService.GetUserRolesByIds(entity.UserRoleIds);
-            // TODO: send mail
+            // TODO: Send mail
             var password = CreateRandomPassword();
 
             if (userRepository.Get(w => w.Username == entity.Username) != null)
@@ -97,7 +97,7 @@ namespace MediaStorage.Service
         public ServiceResult UpdateUser(UserPostViewModel entity)
         {
             var userRoles = userRoleService.GetUserRolesByIds(entity.UserRoleIds);
-            // TODO: send mail
+            // TODO: Send mail
             var password = CreateRandomPassword();
 
             var user = userRepository.Get(w => w.Id.ToString() == entity.Id, i => i.UserRoles);

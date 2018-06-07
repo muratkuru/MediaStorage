@@ -70,7 +70,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View();
         }
 
-        // TODO: cascade remove stocks
+        // TODO: Cascade remove
         public ActionResult Remove(string id, bool cascadeRemove = false)
         {
             if (int.TryParse(id, out int outID))

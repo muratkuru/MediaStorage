@@ -102,7 +102,7 @@ namespace MediaStorage.Service
         {
             if(cascadeRemove)
             {
-                // TODO: cascade remove
+                // TODO: Cascade remove
             }
 
             departmentRepository.Delete(id);

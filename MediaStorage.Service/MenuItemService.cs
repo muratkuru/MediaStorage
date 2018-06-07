@@ -17,6 +17,8 @@ namespace MediaStorage.Service
 
         ICollection<MenuItemListViewModel> GetMenuItemsByFilter(int? menuId);
 
+        bool HasMenuItemsByMenuId(int menuId);
+
         MenuItemPostViewModel GetMenuItemById(int id);
 
         ServiceResult AddMenuItem(MenuItemPostViewModel entity);
@@ -100,6 +102,11 @@ namespace MediaStorage.Service
                 Menu = s.Menu.Name,
                 ParentMenuItem = s.ParentMenuItem.Title
             }).ToList();
+        }
+
+        public bool HasMenuItemsByMenuId(int menuId)
+        {
+            return menuItemRepository.Any(w => w.MenuId == menuId);
         }
 
         public MenuItemPostViewModel GetMenuItemById(int id)

@@ -64,11 +64,11 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
         {
             if (int.TryParse(id, out int outID))
             {
-                var menuItems = menuItemService.GetMenuItemsByFilter(outID);
-
-                if (menuItems.Count > 0 && !cascadeRemove)
-                    TempData["result"] = new ServiceResult(false, 
-                        "Attention! This element will deleted with child elements.", 
+                if (menuItemService.HasMenuItemsByMenuId(outID) && !cascadeRemove)
+                    TempData["result"] = new ServiceResult
+                    (
+                        false, 
+                        "Attention! This element will delete with child elements.", 
                         true, 
                         Url.Action("Remove", new { cascadeRemove = true })
                     );
@@ -77,6 +77,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             }
             else
                 TempData["result"] = new ServiceResult(false, "Invalid ID.");
+
             return RedirectToAction("Index");
         }
     }

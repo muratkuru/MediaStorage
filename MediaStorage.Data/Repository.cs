@@ -27,6 +27,8 @@ namespace MediaStorage.Data
 
         Task<T> FindAsync(object key);
 
+        bool Any(Expression<Func<T, bool>> predicate);
+
         void Add(T entity);
 
         void AddRange(ICollection<T> entities);
@@ -113,6 +115,11 @@ namespace MediaStorage.Data
         public void DeleteRange(ICollection<T> entities)
         {
             dbSet.RemoveRange(entities);
+        }
+
+        public bool Any(Expression<Func<T, bool>> predicate)
+        {
+            return dbSet.Any(predicate);
         }
 
         public T Find(object key)

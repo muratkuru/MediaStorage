@@ -1,10 +1,9 @@
 ﻿using MediaStorage.Data;
 using MediaStorage.Data.Entities;
-using MediaStorage.Common.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using MediaStorage.Common;
-using System;
+using MediaStorage.Common.ViewModels.MaterialType;
 
 namespace MediaStorage.Service
 {
@@ -12,9 +11,13 @@ namespace MediaStorage.Service
     {
         ICollection<MaterialTypeViewModel> GetAllMaterialTypes();
 
-        ServiceResult CreateMaterialType(MaterialTypeViewModel model);
+        MaterialTypeViewModel GetMaterialTypeById(int id);
 
-        ServiceResult DeleteMaterialType(int id);
+        ServiceResult AddMaterialType(MaterialTypeViewModel entity);
+
+        ServiceResult UpdateMaterialType(MaterialTypeViewModel entity);
+
+        ServiceResult RemoveMaterialType(int id, bool cascadeRemove = false);
     }
 
     public class MaterialTypeService : IMaterialTypeService
@@ -28,59 +31,6 @@ namespace MediaStorage.Service
             this.materialTypeRepository = materialTypeRepository;
         }
 
-        public ServiceResult CreateMaterialType(MaterialTypeViewModel model)
-        {
-            int affectedRows = 0;
-
-            if (model != null)
-            {
-                materialTypeRepository.Add(new MaterialType
-                {
-                    Name = model.Name
-                });
-                try
-                {
-                    affectedRows = uow.Commit();
-                }
-                catch(Exception ex)
-                {
-                    return new ServiceResult
-                    {
-                        IsSuccessful = false,
-                        Message = ex.Message
-                    };
-                }
-            }
-
-            return affectedRows == 1
-                ? new ServiceResult { IsSuccessful = true, Message = "Ekleme işlemi başarılı." }
-                : new ServiceResult { IsSuccessful = false, Message = "Ekleme işlemi başarısız." };
-        }
-
-        public ServiceResult DeleteMaterialType(int id)
-        {
-            int affectedRows = 0;
-
-            materialTypeRepository.Delete(id);
-
-            try
-            {
-                affectedRows = uow.Commit();
-            }
-            catch (Exception ex)
-            {
-                return new ServiceResult
-                {
-                    IsSuccessful = false,
-                    Message = ex.Message
-                };
-            }
-
-            return affectedRows == 1
-                ? new ServiceResult { IsSuccessful = false, Message = "Silme işlemi başarılı." }
-                : new ServiceResult { IsSuccessful = false, Message = "Silme işlemi başarısız." };
-        }
-
         public ICollection<MaterialTypeViewModel> GetAllMaterialTypes()
         {
             return materialTypeRepository
@@ -89,8 +39,54 @@ namespace MediaStorage.Service
                 {
                     Id = s.Id,
                     Name = s.Name
-                })
-                .ToList();
+                }).ToList();
+        }
+
+        public MaterialTypeViewModel GetMaterialTypeById(int id)
+        {
+            var materialType = materialTypeRepository.Find(id);
+
+            return materialType == null ? null : new MaterialTypeViewModel
+            {
+                Id = materialType.Id,
+                Name = materialType.Name
+            };
+        }
+
+        public ServiceResult AddMaterialType(MaterialTypeViewModel entity)
+        {
+            materialTypeRepository.Add(new MaterialType
+            {
+                Name = entity.Name
+            });
+
+            return ServiceResult.GetAddResult(uow.Commit() == 1);
+        }
+
+        public ServiceResult UpdateMaterialType(MaterialTypeViewModel entity)
+        {
+            materialTypeRepository.Update(new MaterialType
+            {
+                Id = entity.Id.Value,
+                Name = entity.Name
+            });
+
+            return ServiceResult.GetUpdateResult(uow.Commit() == 1);
+        }
+
+        public ServiceResult RemoveMaterialType(int id, bool cascadeRemove = false)
+        {
+            if(cascadeRemove)
+            {
+                // TODO: Cascade remove
+                //var materialType = materialTypeRepository.GetAll(w => w.Id == id, i => i.Materials, i => i.Categories, i => i.MaterialTypeProperties).ToList();
+                //if (materialType.Count > 0)
+                //    materialTypeRepository.DeleteRange(materialType);
+            }
+
+            materialTypeRepository.Delete(id);
+
+            return ServiceResult.GetRemoveResult(uow.Commit() > 0);
         }
     }
 }

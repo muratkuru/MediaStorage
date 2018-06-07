@@ -1,0 +1,25 @@
+﻿@model MediaStorage.Common.ViewModels.MaterialType.MaterialTypeViewModel
+
+@{
+    ViewBag.Title = "Material Type";
+}
+
+<div class="col-md-12">
+    <h1>@ViewBag.Title <small>@Html.GetAddOrUpdateSubTitle()</small></h1>
+    <div class="col-md-12">
+        <form class="add-or-update-form" action="@Url.Action("AddOrUpdate")" method="post">
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(m => m.Id)
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Name)</label>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Name) })
+            </div>
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-save"></i> Save
+            </button>
+            @Html.ShowResult()
+            @Html.ValidationSummary("", new { @class = "alert alert-danger custom-alert" })
+        </form>
+    </div>
+</div>

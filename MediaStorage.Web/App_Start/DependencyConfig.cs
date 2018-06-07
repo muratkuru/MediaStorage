@@ -20,13 +20,13 @@ namespace MediaStorage.Web.App_Start
             builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>));
 
             builder.RegisterType<MenuService>().As<IMenuService>();
-            builder.RegisterType<MaterialTypeService>().As<IMaterialTypeService>();
             builder.RegisterType<UserService>().As<IUserService>();
             builder.RegisterType<UserRoleService>().As<IUserRoleService>();
             builder.RegisterType<MenuItemService>().As<IMenuItemService>();
             builder.RegisterType<LibraryService>().As<ILibraryService>();
             builder.RegisterType<DepartmentService>().As<IDepartmentService>();
             builder.RegisterType<TagService>().As<ITagService>();
+            builder.RegisterType<MaterialTypeService>().As<IMaterialTypeService>();
 
             IContainer container = builder.Build();
 

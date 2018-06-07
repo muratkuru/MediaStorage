@@ -34,14 +34,14 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
                     var user = userService.GetUserById(outID);
                     if(user == null)
                     {
-                        TempData["result"] = new ServiceResult(false, "There is no User record for this ID.");
+                        TempData["result"] = ServiceResult.NoRecordResult;
                         return RedirectToAction("Index");
                     }
                     return View(user);
                 }
                 else
                 {
-                    TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                    TempData["result"] = ServiceResult.InvalidIDResult;
                     return RedirectToAction("Index");
                 }
             }
@@ -71,7 +71,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             if (Guid.TryParse(id, out Guid outID))
                 TempData["result"] = userService.RemoveUser(outID);
             else
-                TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                TempData["result"] = ServiceResult.InvalidIDResult;
             return RedirectToAction("Index");
         }
     }

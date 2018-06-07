@@ -1,10 +1,6 @@
 ﻿using MediaStorage.Common;
 using MediaStorage.Common.ViewModels.Menu;
 using MediaStorage.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MediaStorage.Web.Areas.Administration.Controllers
@@ -42,14 +38,14 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
                     var menuItem = menuItemService.GetMenuItemById(outID);
                     if(menuItem == null)
                     {
-                        TempData["result"] = new ServiceResult(false, "There is no Menu Item record for this ID.");
+                        TempData["result"] = ServiceResult.NoRecordResult;
                         return RedirectToAction("Index");
                     }
                     return View(menuItem);
                 }
                 else
                 {
-                    TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                    TempData["result"] = ServiceResult.InvalidIDResult;
                     return RedirectToAction("Index");
                 }
             }
@@ -78,7 +74,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             if (int.TryParse(id, out int outID))
                 TempData["result"] = menuItemService.RemoveMenuItem(outID);
             else
-                TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                TempData["result"] = ServiceResult.InvalidIDResult;
             return RedirectToAction("Index");
         }
 

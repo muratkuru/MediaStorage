@@ -1,10 +1,6 @@
 ﻿using MediaStorage.Common;
 using MediaStorage.Common.ViewModels.Department;
 using MediaStorage.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MediaStorage.Web.Areas.Administration.Controllers
@@ -43,14 +39,14 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
                     var department = departmentService.GetDepartmentById(outID);
                     if(department == null)
                     {
-                        TempData["result"] = new ServiceResult(false, "There is no department record for this ID.");
+                        TempData["result"] = ServiceResult.NoRecordResult;
                         return RedirectToAction("Index");
                     }
                     return View(department);
                 }
                 else
                 {
-                    TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                    TempData["result"] = ServiceResult.InvalidIDResult;
                     return RedirectToAction("Index");
                 }
             }
@@ -74,13 +70,13 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View();
         }
 
-        // TODO: cascaderemove stocks
+        // TODO: cascade remove stocks
         public ActionResult Remove(string id, bool cascadeRemove = false)
         {
             if (int.TryParse(id, out int outID))
                 TempData["result"] = departmentService.RemoveDepartment(outID, cascadeRemove);
             else
-                TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                TempData["result"] = ServiceResult.InvalidIDResult;
 
             return RedirectToAction("Index");
         }

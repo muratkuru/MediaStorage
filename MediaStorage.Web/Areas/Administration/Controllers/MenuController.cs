@@ -31,14 +31,14 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
                     var menu = menuService.GetMenuById(outID);
                     if (menu == null)
                     {
-                        TempData["result"] = new ServiceResult(false, "There is no menu record for this ID.");
+                        TempData["result"] = ServiceResult.NoRecordResult;
                         return RedirectToAction("Index");
                     }
                     return View(menu);
                 }
                 else
                 {
-                    TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                    TempData["result"] = ServiceResult.InvalidIDResult;
                     return RedirectToAction("Index");
                 }
             }
@@ -76,7 +76,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
                     TempData["result"] = menuService.RemoveMenu(outID, cascadeRemove);
             }
             else
-                TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                TempData["result"] = ServiceResult.InvalidIDResult;
 
             return RedirectToAction("Index");
         }

@@ -29,14 +29,14 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
                     var userRole = userRoleService.GetUserRoleById(outID);
                     if(userRole == null)
                     {
-                        TempData["result"] = new ServiceResult(false, "There is no User Role record for this ID.");
+                        TempData["result"] = ServiceResult.NoRecordResult;
                         return RedirectToAction("Index");
                     }
                     return View(userRole);
                 }
                 else
                 {
-                    TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                    TempData["result"] = ServiceResult.InvalidIDResult;
                     return RedirectToAction("Index");
                 }
             }
@@ -63,7 +63,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             if (int.TryParse(id, out int outID))
                 TempData["result"] = userRoleService.RemoveUserRole(outID);
             else
-                TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                TempData["result"] = ServiceResult.InvalidIDResult;
             return RedirectToAction("Index");
         }
     }

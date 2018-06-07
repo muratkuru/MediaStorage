@@ -1,10 +1,6 @@
 ﻿using MediaStorage.Common;
 using MediaStorage.Common.ViewModels.Tag;
 using MediaStorage.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MediaStorage.Web.Areas.Administration.Controllers
@@ -33,14 +29,14 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
                     var tag = tagService.GetTagById(outID);
                     if(tag == null)
                     {
-                        TempData["result"] = new ServiceResult(false, "There is no tag record for this ID.");
+                        TempData["result"] = ServiceResult.NoRecordResult;
                         return RedirectToAction("Index");
                     }
                     return View(tag);
                 }
                 else
                 {
-                    TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                    TempData["result"] = ServiceResult.InvalidIDResult;
                     return RedirectToAction("Index");
                 }
             }
@@ -67,7 +63,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             if (int.TryParse(id, out int outID))
                 TempData["result"] = tagService.RemoveTag(outID);
             else
-                TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                TempData["result"] = ServiceResult.InvalidIDResult;
 
             return RedirectToAction("Index");
         }

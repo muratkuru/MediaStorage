@@ -31,14 +31,14 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
                     var library = libraryService.GetLibraryById(outID);
                     if (library == null)
                     {
-                        TempData["result"] = new ServiceResult(false, "There is no library record for this ID.");
+                        TempData["result"] = ServiceResult.NoRecordResult;
                         return RedirectToAction("Index");
                     }
                     return View(library);
                 }
                 else
                 {
-                    TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                    TempData["result"] = ServiceResult.InvalidIDResult;
                     return RedirectToAction("Index");
                 }
             }
@@ -78,7 +78,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
                     TempData["result"] = libraryService.RemoveLibrary(outID, cascadeRemove);
             }
             else
-                TempData["result"] = new ServiceResult(false, "Invalid ID.");
+                TempData["result"] = ServiceResult.InvalidIDResult;
 
             return RedirectToAction("Index");
         }

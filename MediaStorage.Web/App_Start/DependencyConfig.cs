@@ -26,6 +26,7 @@ namespace MediaStorage.Web.App_Start
             builder.RegisterType<MenuItemService>().As<IMenuItemService>();
             builder.RegisterType<LibraryService>().As<ILibraryService>();
             builder.RegisterType<DepartmentService>().As<IDepartmentService>();
+            builder.RegisterType<TagService>().As<ITagService>();
 
             IContainer container = builder.Build();
 

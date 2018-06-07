@@ -44,6 +44,7 @@
     <Compile Include="DepartmentService.cs" />
     <Compile Include="LibraryService.cs" />
     <Compile Include="MenuItemService.cs" />
+    <Compile Include="TagService.cs" />
     <Compile Include="UserRoleService.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="MaterialTypeService.cs" />

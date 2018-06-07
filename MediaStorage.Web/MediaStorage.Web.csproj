@@ -152,6 +152,8 @@
     <Content Include="Areas\Administration\Views\Library\AddOrUpdate.cshtml" />
     <Content Include="Areas\Administration\Views\Department\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Department\AddOrUpdate.cshtml" />
+    <Content Include="Areas\Administration\Views\Tag\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Tag\AddOrUpdate.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -181,6 +183,7 @@
     <Compile Include="Areas\Administration\Controllers\LibraryController.cs" />
     <Compile Include="Areas\Administration\Controllers\MenuController.cs" />
     <Compile Include="Areas\Administration\Controllers\MenuItemController.cs" />
+    <Compile Include="Areas\Administration\Controllers\TagController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserRoleController.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />

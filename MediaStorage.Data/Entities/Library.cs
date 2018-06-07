@@ -7,8 +7,6 @@ namespace MediaStorage.Data.Entities
         public string Name { get; set; }
 
         public ICollection<Department> Departments { get; set; }
-
-        public ICollection<Stock> Stocks { get; set; }
     }
 
     class LibraryConfiguration : BaseConfiguration<Library>
@@ -20,9 +18,6 @@ namespace MediaStorage.Data.Entities
                 .IsRequired()
                 .HasMaxLength(255);
             HasMany(m => m.Departments)
-                .WithRequired()
-                .HasForeignKey(m => m.LibraryId);
-            HasMany(m => m.Stocks)
                 .WithRequired()
                 .HasForeignKey(m => m.LibraryId);
         }

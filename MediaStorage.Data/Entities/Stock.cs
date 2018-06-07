@@ -11,9 +11,6 @@ namespace MediaStorage.Data.Entities
         public int MaterialId { get; set; }
         public virtual Material Material { get; set; }
 
-        public int LibraryId { get; set; }
-        public virtual Library Library { get; set; }
-
         public int DepartmentId { get; set; }
         public virtual Department Department { get; set; }
 

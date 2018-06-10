@@ -11,6 +11,8 @@ namespace MediaStorage.Service
     {
         ICollection<MaterialTypeViewModel> GetAllMaterialTypes();
 
+        ICollection<CustomSelectListItem> GetMaterialTypesAsSelectListItem(int? categoryId);
+
         MaterialTypeViewModel GetMaterialTypeById(int id);
 
         ServiceResult AddMaterialType(MaterialTypeViewModel entity);
@@ -39,6 +41,20 @@ namespace MediaStorage.Service
                 {
                     Id = s.Id,
                     Name = s.Name
+                }).ToList();
+        }
+
+        public ICollection<CustomSelectListItem> GetMaterialTypesAsSelectListItem(int? categoryId)
+        {
+            return materialTypeRepository
+                .GetAll()
+                .Select(s => new CustomSelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name,
+                    Selected = categoryId.HasValue
+                        ? s.Categories.Any(w => w.Id == categoryId)
+                        : false
                 }).ToList();
         }
 

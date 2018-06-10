@@ -44,6 +44,8 @@
     <Compile Include="CustomSelectListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceResult.cs" />
+    <Compile Include="ViewModels\Category\CategoryListViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Department\DepartmentListViewModel.cs" />
     <Compile Include="ViewModels\Department\DepartmentViewModel.cs" />
     <Compile Include="ViewModels\Library\LibraryViewModel.cs" />

@@ -27,6 +27,7 @@ namespace MediaStorage.Web.App_Start
             builder.RegisterType<DepartmentService>().As<IDepartmentService>();
             builder.RegisterType<TagService>().As<ITagService>();
             builder.RegisterType<MaterialTypeService>().As<IMaterialTypeService>();
+            builder.RegisterType<CategoryService>().As<ICategoryService>();
 
             IContainer container = builder.Build();
 

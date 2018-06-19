@@ -1,6 +1,7 @@
 ﻿using MediaStorage.Common;
 using MediaStorage.Common.ViewModels.Category;
 using MediaStorage.Service;
+using MediaStorage.Web.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View(categoryService.GetAllCategories());
         }
 
+        [UrlConstraint]
         public ActionResult AddOrUpdate(int? id)
         {
             SetAddOrUpdateViewBags(id);
@@ -36,7 +38,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
                 if (category == null)
                 {
                     TempData["result"] = ServiceResult.NoRecordResult;
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Category", new { area = "Administration", id = "" });
                 }
 
                 return View(category);
@@ -63,6 +65,7 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
         }
 
         // TODO: Cascade remove
+        [UrlConstraint(isNullable: false)]
         public ActionResult Remove(int id, bool cascadeRemove = false)
         {
             TempData["result"] = categoryService.RemoveCategory(id);

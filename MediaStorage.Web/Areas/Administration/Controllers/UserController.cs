@@ -1,6 +1,7 @@
 ﻿using MediaStorage.Common;
 using MediaStorage.Common.ViewModels.User;
 using MediaStorage.Service;
+using MediaStorage.Web.Attributes;
 using System;
 using System.Web.Mvc;
 
@@ -23,27 +24,20 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View(userService.GetAllUsers());
         }
 
-        public ActionResult AddOrUpdate(string id)
+        [UrlConstraint(ConstraintType.Guid)]
+        public ActionResult AddOrUpdate(Guid? id)
         {
             ViewBag.UserRoles = userRoleService.GetAllUserRolesByUserId(id).ToMVCSelectListItem();
 
-            if(!string.IsNullOrEmpty(id))
+            if(id.HasValue)
             {
-                if(Guid.TryParse(id, out Guid outID))
+                var user = userService.GetUserById(id.Value);
+                if (user == null)
                 {
-                    var user = userService.GetUserById(outID);
-                    if(user == null)
-                    {
-                        TempData["result"] = ServiceResult.NoRecordResult;
-                        return RedirectToAction("Index");
-                    }
-                    return View(user);
-                }
-                else
-                {
-                    TempData["result"] = ServiceResult.InvalidIDResult;
+                    TempData["result"] = ServiceResult.NoRecordResult;
                     return RedirectToAction("Index");
                 }
+                return View(user);
             }
 
             return View();
@@ -57,21 +51,20 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
 
             if (ModelState.IsValid)
             {
-                if(string.IsNullOrEmpty(entity.Id))
-                    TempData["result"] = userService.AddUser(entity);
-                else
+                if(entity.Id.HasValue)
                     TempData["result"] = userService.UpdateUser(entity);
+                else
+                    TempData["result"] = userService.AddUser(entity);
             }
 
             return View();
         }
 
-        public ActionResult Remove(string id)
+        [UrlConstraint(ConstraintType.Guid, isNullable: false)]
+        public ActionResult Remove(Guid id)
         {
-            if (Guid.TryParse(id, out Guid outID))
-                TempData["result"] = userService.RemoveUser(outID);
-            else
-                TempData["result"] = ServiceResult.InvalidIDResult;
+            TempData["result"] = userService.RemoveUser(id);
+
             return RedirectToAction("Index");
         }
     }

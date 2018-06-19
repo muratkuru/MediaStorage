@@ -192,6 +192,7 @@
     <Compile Include="Areas\Administration\Controllers\TagController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserRoleController.cs" />
+    <Compile Include="Attributes\UrlConstraintAttribute.cs" />
     <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Extensions\SelectListItemMapExtension.cs" />

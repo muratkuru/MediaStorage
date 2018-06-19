@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MediaStorage.Common.ViewModels.User
 {
     public class UserPostViewModel
     {
-        public string Id { get; set; }
+        public Guid? Id { get; set; }
 
         [Display(Name = "Username")]
         [Required]

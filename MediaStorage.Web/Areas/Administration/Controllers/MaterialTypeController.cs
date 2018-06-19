@@ -1,6 +1,7 @@
 ﻿using MediaStorage.Common;
 using MediaStorage.Common.ViewModels.MaterialType;
 using MediaStorage.Service;
+using MediaStorage.Web.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,26 +25,20 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View(materialTypeService.GetAllMaterialTypes());
         }
 
-        public ActionResult AddOrUpdate(string id)
+        [UrlConstraint]
+        public ActionResult AddOrUpdate(int? id)
         {
-            if(!string.IsNullOrEmpty(id))
+            if(id.HasValue)
             {
-                if(int.TryParse(id, out int outID))
+                var materialType = materialTypeService.GetMaterialTypeById(id.Value);
+                if (materialType == null)
                 {
-                    var materialType = materialTypeService.GetMaterialTypeById(outID);
-                    if(materialType == null)
-                    {
-                        TempData["result"] = ServiceResult.NoRecordResult;
-                        return RedirectToAction("Index");
-                    }
-                    return View(materialType);
-                }
-                else
-                {
-                    TempData["result"] = ServiceResult.InvalidIDResult;
+                    TempData["result"] = ServiceResult.NoRecordResult;
                     return RedirectToAction("Index");
                 }
+                return View(materialType);
             }
+
             return View();
         }
 
@@ -63,15 +58,11 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
         }
 
         // TODO: Cascade remove
-        public ActionResult Remove(string id, bool cascadeRemove = false)
+        [UrlConstraint(isNullable: false)]
+        public ActionResult Remove(int id, bool cascadeRemove = false)
         {
-            if (int.TryParse(id, out int outID))
-            {
-                TempData["result"] = materialTypeService.RemoveMaterialType(outID, cascadeRemove);
-            }
-            else
-                TempData["result"] = ServiceResult.InvalidIDResult;
-
+            TempData["result"] = materialTypeService.RemoveMaterialType(id, cascadeRemove);
+            
             return RedirectToAction("Index");
         }
     }

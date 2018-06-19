@@ -1,6 +1,7 @@
 ﻿using MediaStorage.Common;
 using MediaStorage.Common.ViewModels.Department;
 using MediaStorage.Service;
+using MediaStorage.Web.Attributes;
 using System.Web.Mvc;
 
 namespace MediaStorage.Web.Areas.Administration.Controllers
@@ -25,31 +26,22 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View(departments);
         }
 
-        public ActionResult AddOrUpdate(string id)
+        [UrlConstraint]
+        public ActionResult AddOrUpdate(int? id)
         {
-            bool parameterCorrect = int.TryParse(id, out int outID);
-            int? currentId = parameterCorrect ? outID : default(int?);
+            ViewBag.Libraries = libraryService.GetLibrariesAsSelectListItem(id).ToMVCSelectListItem();
 
-            ViewBag.Libraries = libraryService.GetLibrariesAsSelectListItem(currentId).ToMVCSelectListItem();
-
-            if(!string.IsNullOrEmpty(id))
+            if(id.HasValue)
             {
-                if(parameterCorrect)
+                var department = departmentService.GetDepartmentById(id.Value);
+                if (department == null)
                 {
-                    var department = departmentService.GetDepartmentById(outID);
-                    if(department == null)
-                    {
-                        TempData["result"] = ServiceResult.NoRecordResult;
-                        return RedirectToAction("Index");
-                    }
-                    return View(department);
-                }
-                else
-                {
-                    TempData["result"] = ServiceResult.InvalidIDResult;
+                    TempData["result"] = ServiceResult.NoRecordResult;
                     return RedirectToAction("Index");
                 }
+                return View(department);
             }
+
             return View();
         }
 
@@ -71,12 +63,10 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
         }
 
         // TODO: Cascade remove
-        public ActionResult Remove(string id, bool cascadeRemove = false)
+        [UrlConstraint(isNullable: false)]
+        public ActionResult Remove(int id, bool cascadeRemove = false)
         {
-            if (int.TryParse(id, out int outID))
-                TempData["result"] = departmentService.RemoveDepartment(outID, cascadeRemove);
-            else
-                TempData["result"] = ServiceResult.InvalidIDResult;
+            TempData["result"] = departmentService.RemoveDepartment(id, cascadeRemove);
 
             return RedirectToAction("Index");
         }

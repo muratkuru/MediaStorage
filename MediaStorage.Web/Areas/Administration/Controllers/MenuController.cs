@@ -1,6 +1,7 @@
 ﻿using MediaStorage.Common;
 using MediaStorage.Common.ViewModels.Menu;
 using MediaStorage.Service;
+using MediaStorage.Web.Attributes;
 using System.Web.Mvc;
 
 namespace MediaStorage.Web.Areas.Administration.Controllers
@@ -22,26 +23,20 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View(menuService.GetAllMenus());
         }
 
-        public ActionResult AddOrUpdate(string id)
+        [UrlConstraint]
+        public ActionResult AddOrUpdate(int? id)
         {
-            if (!string.IsNullOrEmpty(id))
+            if(id.HasValue)
             {
-                if (int.TryParse(id, out int outID))
+                var menu = menuService.GetMenuById(id.Value);
+                if (menu == null)
                 {
-                    var menu = menuService.GetMenuById(outID);
-                    if (menu == null)
-                    {
-                        TempData["result"] = ServiceResult.NoRecordResult;
-                        return RedirectToAction("Index");
-                    }
-                    return View(menu);
-                }
-                else
-                {
-                    TempData["result"] = ServiceResult.InvalidIDResult;
+                    TempData["result"] = ServiceResult.NoRecordResult;
                     return RedirectToAction("Index");
                 }
+                return View(menu);
             }
+
             return View();
         }
 
@@ -60,23 +55,19 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View();
         }
 
-        public ActionResult Remove(string id, bool cascadeRemove = false)
+        [UrlConstraint(isNullable: false)]
+        public ActionResult Remove(int id, bool cascadeRemove = false)
         {
-            if (int.TryParse(id, out int outID))
-            {
-                if (menuItemService.HasMenuItemsByMenuId(outID) && !cascadeRemove)
-                    TempData["result"] = new ServiceResult
-                    (
-                        false, 
-                        "Attention! This element will delete with child elements.", 
-                        true, 
-                        Url.Action("Remove", new { cascadeRemove = true })
-                    );
-                else
-                    TempData["result"] = menuService.RemoveMenu(outID, cascadeRemove);
-            }
+            if (menuItemService.HasMenuItemsByMenuId(id) && !cascadeRemove)
+                TempData["result"] = new ServiceResult
+                (
+                    false, 
+                    "Attention! This element will delete with child elements.", 
+                    true, 
+                    Url.Action("Remove", new { cascadeRemove = true })
+                );
             else
-                TempData["result"] = ServiceResult.InvalidIDResult;
+                TempData["result"] = menuService.RemoveMenu(id, cascadeRemove);
 
             return RedirectToAction("Index");
         }

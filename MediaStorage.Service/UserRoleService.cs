@@ -2,6 +2,7 @@
 using MediaStorage.Common.ViewModels.UserRole;
 using MediaStorage.Data;
 using MediaStorage.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +14,7 @@ namespace MediaStorage.Service
 
         ICollection<CustomSelectListItem> GetAllUserRolesByMenuItemId(int? menuItemId);
 
-        ICollection<CustomSelectListItem> GetAllUserRolesByUserId(string userId);
+        ICollection<CustomSelectListItem> GetAllUserRolesByUserId(Guid? userId);
 
         ICollection<UserRole> GetUserRolesByIds(int[] ids);
 
@@ -60,16 +61,16 @@ namespace MediaStorage.Service
                 }).ToList();
         }
 
-        public ICollection<CustomSelectListItem> GetAllUserRolesByUserId(string userId)
+        public ICollection<CustomSelectListItem> GetAllUserRolesByUserId(Guid? userId)
         {
             return userRoleRepository.GetAll()
                 .Select(s => new CustomSelectListItem
                 {
                     Value = s.Id.ToString(),
                     Text = s.Name,
-                    Selected = string.IsNullOrEmpty(userId)
-                        ? false
-                        : s.Users.Any(w => w.Id.ToString() == userId)
+                    Selected = userId.HasValue
+                        ? s.Users.Any(w => w.Id == userId)
+                        : false
                 }).ToList();
         }
 

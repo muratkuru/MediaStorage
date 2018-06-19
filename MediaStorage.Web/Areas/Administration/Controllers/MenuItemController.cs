@@ -1,6 +1,7 @@
 ﻿using MediaStorage.Common;
 using MediaStorage.Common.ViewModels.Menu;
 using MediaStorage.Service;
+using MediaStorage.Web.Attributes;
 using System.Web.Mvc;
 
 namespace MediaStorage.Web.Areas.Administration.Controllers
@@ -24,31 +25,22 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View(menuItemService.GetMenuItemsByFilter(id));
         }
 
-        public ActionResult AddOrUpdate(string id)
+        [UrlConstraint]
+        public ActionResult AddOrUpdate(int? id)
         {
-            bool parameterCorrect = int.TryParse(id, out int outID);
-            int? currentId = parameterCorrect ? outID : default(int?);
+            SetAddOrUpdateViewBags(id);
 
-            SetAddOrUpdateViewBags(currentId);
-
-            if (!string.IsNullOrEmpty(id))
+            if(id.HasValue)
             {
-                if(parameterCorrect)
+                var menuItem = menuItemService.GetMenuItemById(id.Value);
+                if (menuItem == null)
                 {
-                    var menuItem = menuItemService.GetMenuItemById(outID);
-                    if(menuItem == null)
-                    {
-                        TempData["result"] = ServiceResult.NoRecordResult;
-                        return RedirectToAction("Index");
-                    }
-                    return View(menuItem);
-                }
-                else
-                {
-                    TempData["result"] = ServiceResult.InvalidIDResult;
+                    TempData["result"] = ServiceResult.NoRecordResult;
                     return RedirectToAction("Index");
                 }
+                return View(menuItem);
             }
+
             return View();
         }
 
@@ -69,12 +61,11 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View();
         }
 
-        public ActionResult Remove(string id)
+        [UrlConstraint(isNullable: false)]
+        public ActionResult Remove(int id)
         {
-            if (int.TryParse(id, out int outID))
-                TempData["result"] = menuItemService.RemoveMenuItem(outID);
-            else
-                TempData["result"] = ServiceResult.InvalidIDResult;
+            TempData["result"] = menuItemService.RemoveMenuItem(id);
+            
             return RedirectToAction("Index");
         }
 

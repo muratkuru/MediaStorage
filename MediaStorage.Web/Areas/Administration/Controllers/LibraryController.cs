@@ -1,6 +1,7 @@
 ﻿using MediaStorage.Common;
 using MediaStorage.Common.ViewModels.Library;
 using MediaStorage.Service;
+using MediaStorage.Web.Attributes;
 using System.Web.Mvc;
 
 namespace MediaStorage.Web.Areas.Administration.Controllers
@@ -22,26 +23,20 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View(libraryService.GetAllLibraries());
         }
 
-        public ActionResult AddOrUpdate(string id)
+        [UrlConstraint]
+        public ActionResult AddOrUpdate(int? id)
         {
-            if (!string.IsNullOrEmpty(id))
+            if(id.HasValue)
             {
-                if (int.TryParse(id, out int outID))
+                var library = libraryService.GetLibraryById(id.Value);
+                if (library == null)
                 {
-                    var library = libraryService.GetLibraryById(outID);
-                    if (library == null)
-                    {
-                        TempData["result"] = ServiceResult.NoRecordResult;
-                        return RedirectToAction("Index");
-                    }
-                    return View(library);
-                }
-                else
-                {
-                    TempData["result"] = ServiceResult.InvalidIDResult;
+                    TempData["result"] = ServiceResult.NoRecordResult;
                     return RedirectToAction("Index");
                 }
+                return View(library);
             }
+
             return View();
         }
 
@@ -60,25 +55,21 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View();
         }
 
-        public ActionResult Remove(string id, bool cascadeRemove = false)
+        [UrlConstraint(isNullable: false)]
+        public ActionResult Remove(int id, bool cascadeRemove = false)
         {
-            if (int.TryParse(id, out int outID))
+            if(departmentService.HasDepartmentsByLibraryId(id) && !cascadeRemove)
             {
-                if(departmentService.HasDepartmentsByLibraryId(outID) && !cascadeRemove)
-                {
-                    TempData["result"] = new ServiceResult
-                    (
-                        false,
-                        "Attention! This element will delete with child elements.",
-                        true,
-                        Url.Action("Remove", new { cascadeRemove = true })
-                    );
-                }
-                else
-                    TempData["result"] = libraryService.RemoveLibrary(outID, cascadeRemove);
+                TempData["result"] = new ServiceResult
+                (
+                    false,
+                    "Attention! This element will delete with child elements.",
+                    true,
+                    Url.Action("Remove", new { cascadeRemove = true })
+                );
             }
             else
-                TempData["result"] = ServiceResult.InvalidIDResult;
+                TempData["result"] = libraryService.RemoveLibrary(id, cascadeRemove);
 
             return RedirectToAction("Index");
         }

@@ -1,6 +1,7 @@
 ﻿using MediaStorage.Common;
 using MediaStorage.Common.ViewModels.UserRole;
 using MediaStorage.Service;
+using MediaStorage.Web.Attributes;
 using System.Web.Mvc;
 
 namespace MediaStorage.Web.Areas.Administration.Controllers
@@ -20,26 +21,20 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View(userRoleService.GetAllUserRoles());
         }
 
-        public ActionResult AddOrUpdate(string id)
+        [UrlConstraint]
+        public ActionResult AddOrUpdate(int? id)
         {
-            if(!string.IsNullOrEmpty(id))
+            if(id.HasValue)
             {
-                if(int.TryParse(id, out int outID))
+                var userRole = userRoleService.GetUserRoleById(id.Value);
+                if (userRole == null)
                 {
-                    var userRole = userRoleService.GetUserRoleById(outID);
-                    if(userRole == null)
-                    {
-                        TempData["result"] = ServiceResult.NoRecordResult;
-                        return RedirectToAction("Index");
-                    }
-                    return View(userRole);
-                }
-                else
-                {
-                    TempData["result"] = ServiceResult.InvalidIDResult;
+                    TempData["result"] = ServiceResult.NoRecordResult;
                     return RedirectToAction("Index");
                 }
+                return View(userRole);
             }
+            
             return View();
         }
 
@@ -58,12 +53,11 @@ namespace MediaStorage.Web.Areas.Administration.Controllers
             return View();
         }
 
-        public ActionResult Remove(string id)
+        [UrlConstraint(isNullable: false)]
+        public ActionResult Remove(int id)
         {
-            if (int.TryParse(id, out int outID))
-                TempData["result"] = userRoleService.RemoveUserRole(outID);
-            else
-                TempData["result"] = ServiceResult.InvalidIDResult;
+            TempData["result"] = userRoleService.RemoveUserRole(id);
+            
             return RedirectToAction("Index");
         }
     }

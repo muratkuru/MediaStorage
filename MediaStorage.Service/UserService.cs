@@ -53,7 +53,7 @@ namespace MediaStorage.Service
             var user = userRepository.Find(id);
             return user == null ? null : new UserPostViewModel
             {
-                Id = user.Id.ToString(),
+                Id = user.Id,
                 Username = user.Username,
                 Mail = user.Mail
             };
@@ -100,7 +100,7 @@ namespace MediaStorage.Service
             // TODO: Send mail
             var password = CreateRandomPassword();
 
-            var user = userRepository.Get(w => w.Id.ToString() == entity.Id, i => i.UserRoles);
+            var user = userRepository.Get(w => w.Id == entity.Id, i => i.UserRoles);
 
             if (user.Username != entity.Username)
                 if (userRepository.Get(w => w.Username == entity.Username) != null)
